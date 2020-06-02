@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="继承的几种方式, qiYuei">
+    <meta name="keywords" content="图解HTTP缓存, qiYuei">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>继承的几种方式 | qiYuei</title>
+    <title>图解HTTP缓存 | qiYuei</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -264,12 +264,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">继承的几种方式</h1>
+                    <h1 class="description center-align post-title">图解HTTP缓存</h1>
                 </div>
             </div>
         </div>
@@ -394,16 +394,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%BB%A7%E6%89%BF/">
-                                <span class="chip bg-color">继承</span>
+                            <a href="/tags/%E5%BC%BA%E7%BC%93%E5%AD%98/">
+                                <span class="chip bg-color">强缓存</span>
                             </a>
                         
-                            <a href="/tags/%E5%8E%9F%E5%9E%8B%E9%93%BE/">
-                                <span class="chip bg-color">原型链</span>
+                            <a href="/tags/%E5%BC%B1%E7%BC%93%E5%AD%98/">
+                                <span class="chip bg-color">弱缓存</span>
                             </a>
                         
-                            <a href="/tags/%E5%8E%9F%E5%9E%8B/">
-                                <span class="chip bg-color">原型</span>
+                            <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">
+                                <span class="chip bg-color">浏览器</span>
                             </a>
                         
                     </div>
@@ -427,7 +427,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-05-29
+                    2020-06-02
                 </div>
                 
 
@@ -436,14 +436,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    885
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    4 分
                 </div>
                 
 
@@ -453,100 +453,45 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><blockquote>
-<p>面试官：说一说 JS 中的继承方式有哪些？以及各个继承方式的优缺点。<br>首先先来分析下这道面试题的考点有什么？首先是继承,继承有很多种方式基本上都离不开两个概念<code>原型</code>和<code>原型链</code>。然后就是这种继承的优缺点</p>
-</blockquote>
-<h3 id="课前知识"><a href="#课前知识" class="headerlink" title="课前知识"></a>课前知识</h3><h4 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h4><p>首先每个JS对象都会有一个<code>__proto__</code>对象,而如果是一个函数的话的它的原型则是<code>prototype</code></p>
-<h4 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h4><p>对象中的每一个<code>__proto__</code>和<code>prototype</code>都指向原型的<code>__proto__</code>,这样一来就形成了一条原型链</p>
-<h4 id="两者间的联系"><a href="#两者间的联系" class="headerlink" title="两者间的联系"></a>两者间的联系</h4><img src="/2020/05/29/ji-cheng-de-ji-chong-fang-shi/1.png" class>
-<p>这张图看上去第一眼就跟清明上河图一般都没有哈哈哈哈,反正我第一次看这张图是不懂。一坨一坨的很难懂。<br>那我们就来将它拆解分析。首先我们需要知道的是</p>
-<pre class=" language-js"><code class="language-js"><span class="token keyword">var</span> obj <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-obj<span class="token punctuation">.</span>__proto__ <span class="token operator">===</span> Object<span class="token punctuation">.</span>prototype <span class="token comment" spellcheck="true">// true</span>
-obj<span class="token punctuation">.</span>__proto__ <span class="token operator">===</span> Object<span class="token punctuation">.</span>__proto__ <span class="token comment" spellcheck="true">// false</span>
-Object<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>__proto__ <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token comment" spellcheck="true">// true</span></code></pre>
-<p>由上面可以得出一个结论</p>
-<ol>
-<li>每一个对象都有一个<code>__proto__</code>属性,而这个属性指向<code>JS</code>全局函数<code>Object</code>的<code>prototype</code>。</li>
-<li>全局函数<code>Object</code>的<code>prototype</code>上面的<code>__proto__</code>指向原型链的终点<code>null</code><pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> foo <span class="token punctuation">(</span>name<span class="token punctuation">,</span>age<span class="token punctuation">)</span><span class="token punctuation">{</span>
-<span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
-<span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age
-<span class="token punctuation">}</span>
-<span class="token keyword">let</span> f1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">foo</span><span class="token punctuation">(</span><span class="token string">'小王'</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>
-<span class="token keyword">let</span> f2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">foo</span><span class="token punctuation">(</span><span class="token string">'小绿'</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span>
-f1<span class="token punctuation">.</span>__proto__ <span class="token operator">===</span> foo<span class="token punctuation">.</span>prototype <span class="token comment" spellcheck="true">// true</span>
-f2<span class="token punctuation">.</span>__proto__ <span class="token operator">===</span> foo<span class="token punctuation">.</span>prototype <span class="token comment" spellcheck="true">// true</span>
-f1<span class="token punctuation">.</span>__proto__ <span class="token operator">===</span> f1<span class="token punctuation">.</span>constructor <span class="token comment" spellcheck="true">// false</span>
-f1 <span class="token operator">===</span> f2 <span class="token comment" spellcheck="true">// false</span>
-f1<span class="token punctuation">.</span>__proto__ <span class="token operator">===</span> f2<span class="token punctuation">.</span>__proto__ <span class="token comment" spellcheck="true">// true</span>
-f1 <span class="token keyword">instanceof</span> <span class="token class-name">foo</span> <span class="token comment" spellcheck="true">// true</span></code></pre>
-上面的代码可能你一时间还看不懂。那我就上另一张神图<img src="/2020/05/29/ji-cheng-de-ji-chong-fang-shi/2.png" class>
-这样是不是就清楚多了呀。那我们来整理一下结论</li>
-</ol>
+                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>作为一个合格的前端工程师,且以大厂为目标的程序猿,浏览器的相关工作原理使我们进行性能优化的基石。必须牢牢掌握这才能对瞬息万变的实际场景,针对性地给出实际方案,而不是各种背诵(掘金上混脸熟)的开发’军规’和性能优化常见条例。这样很难真正发现问题所在。自己也得不到实质性的提升。</p>
+<p>HTTP缓存分为两种<code>强缓存</code>和<code>协商缓存</code>。两者的作用都是加快资源获取,提升用户体验,减少网络连接,缓解服务器的压力。还有这里的缓存是指<code>文件文件</code>!!!并不是指平时后端从服务器拿出来的数据。</p>
+<img src="/2020/06/02/tu-jie-http-huan-cun/1.png" class>
+
+<p>又到了看图说话的时候了,我们都知道我们请求文件是发送<code>get</code>请求,在发起的时候<code>浏览器</code>就回去找请求头是否开启了<code>强缓存</code>。没开启就直接进去<code>弱缓存</code>阶段了。如果开启了就回去比对<code>强缓存的标志</code>是否过期之类的,没有过期则直接读取<code>缓存</code>这时候状态码是<code>200</code>(实际上并没有发请求)！紧接着过期了,那就必须发送一个请求去服务器了。这就到了<code>弱缓存</code>阶段。这时候就会询问服务器<code>我所请求的文件是否更新了</code>如果没更新则会返回<code>304</code>告诉浏览器<code>文件没有更新</code>。更新了则返回<code>200</code>让浏览器缓存新的文件。</p>
+<h4 id="强缓存"><a href="#强缓存" class="headerlink" title="强缓存"></a>强缓存</h4><p>不需要发送网络连接给服务器,直接读取本地的缓存。缓存可以从<code>硬盘</code>或者<code>内存</code>中。这是由浏览器决定的。但是强缓存是由<code>Expires</code>、<code>Cache-control</code>、<code>Prage</code>3个属性来控制的。</p>
+<h4 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h4><p><code>Expires</code>也就是过期时间,这里通常会设置一个时间戳<code>Tue, 02 Jun 2020 04:12:42 GMT</code>但是这个属性有严重的缺陷就是如果服务器时间跟本地时间不同的话(时区)这个字段就没有任何意义了。所以这个字段在<code>http1.1</code>是采用<code>Cache-control</code>来控制。<code>Expires</code>优先级最低</p>
+<h4 id="Cache-control"><a href="#Cache-control" class="headerlink" title="Cache-control"></a>Cache-control</h4><p><code>Cache-control</code>这个属性是<code>http1.1</code>新增,在响应头和请求头中都可以设置。常见的属性有</p>
 <ul>
-<li>通过函数<code>new</code>出来的实例,它的<code>__proto__</code>指向构造函数的<code>prototype</code></li>
-<li><code>prototype</code>指向的就是原型对象，原型对象放的就是对象共享的属性</li>
-<li>原型对象里有一个<code>constructor</code>属性，这个属性又指回了构造函数。<br>总结出来一句话就是<blockquote>
-<p>构造函数的 prototype 指向原型对象，原型对象有一个 constructor 属性指回构造函数，每个构造函数生成的实例对象都有一个 proto 属性，这个属性指向原型对象。</p>
-</blockquote>
-<img src="/2020/05/29/ji-cheng-de-ji-chong-fang-shi/3.png" class>
-<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3></li>
+<li>max-age: 单位是秒,缓存时间计算方式是距离上一次发起时间的秒数,超过间隔的秒数缓存失效</li>
+<li>no-cache: 禁止使用强缓存</li>
+<li>no-store: 禁止使用缓存(包括协商缓存)</li>
+<li>private: 专用于个人的缓存,中间代理,CDN等不能缓存响应</li>
+<li>public: 响应可以被中间代理、CDN等缓存</li>
+<li>must-revalidate: 在缓存过期前可以使用,过期后必须向服务器验证</li>
 </ul>
-<h4 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h4><pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span>age<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
-  <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age
-  <span class="token keyword">this</span><span class="token punctuation">.</span>play <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">function</span> <span class="token function">dog</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">{</span>
-   <span class="token keyword">this</span><span class="token punctuation">.</span>type <span class="token operator">=</span>type
-<span class="token punctuation">}</span>
-dog<span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">foo</span><span class="token punctuation">(</span><span class="token string">'小猫'</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>
-<span class="token keyword">let</span> ccc <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">dog</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
-<span class="token keyword">let</span> ddd <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">dog</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span></code></pre>
-<img src="/2020/05/29/ji-cheng-de-ji-chong-fang-shi/4.png" class>
-<p>由图上的结果,我只对<code>ccc</code>实例上的<code>play</code>数组但是<code>ddd</code>实例上<code>play</code>也跟着改变了。因为两个实例使用的是同一个原型对象。</p>
-<h4 id="最经典的call-方式"><a href="#最经典的call-方式" class="headerlink" title="最经典的call()方式"></a>最经典的call()方式</h4><pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span>age<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
-  <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age
-  <span class="token keyword">this</span><span class="token punctuation">.</span>play <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span>
-<span class="token punctuation">}</span>
-foo<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>say <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-     console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'你要我说什么'</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">function</span> <span class="token function">dog</span><span class="token punctuation">(</span>type<span class="token punctuation">,</span>name<span class="token punctuation">,</span>age<span class="token punctuation">)</span><span class="token punctuation">{</span>
-   foo<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span>name<span class="token punctuation">,</span>age<span class="token punctuation">)</span>
-   <span class="token keyword">this</span><span class="token punctuation">.</span>type <span class="token operator">=</span> type
-<span class="token punctuation">}</span>
-<span class="token keyword">let</span> csd <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">dog</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token string">'小李'</span><span class="token punctuation">,</span><span class="token number">32</span><span class="token punctuation">)</span>
-<span class="token keyword">let</span> tce <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">dog</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token string">'小王'</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>csd<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>csd<span class="token punctuation">.</span>play<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token number">555</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>tce<span class="token punctuation">.</span>play<span class="token punctuation">)</span>
-csd<span class="token punctuation">.</span><span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-tce<span class="token punctuation">.</span><span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<img src="/2020/05/29/ji-cheng-de-ji-chong-fang-shi/5.png" class>
-<p>上图的结果很明显,虽然解决了使用同一个原型对象的问题。但是我们却没法调用原本加在<code>foo.prototype</code>的方法</p>
-<h4 id="组合式"><a href="#组合式" class="headerlink" title="组合式"></a>组合式</h4><pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span>age<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
-  <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age
-  <span class="token keyword">this</span><span class="token punctuation">.</span>play <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">function</span> <span class="token function">dog</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">{</span>
-     foo<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span>
-   <span class="token keyword">this</span><span class="token punctuation">.</span>type <span class="token operator">=</span>type
-<span class="token punctuation">}</span>
-dog<span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">foo</span><span class="token punctuation">(</span><span class="token string">'小猫'</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span></code></pre>
-<p>这个组合的方式很明显就是吧上面两个的方式组合起来了。但是这样相当于调用了两次<code>foo</code>造成了不必要的新能浪费</p>
-<h4 id="组合式优化"><a href="#组合式优化" class="headerlink" title="组合式优化"></a>组合式优化</h4><pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span>age<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
-  <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age
-  <span class="token keyword">this</span><span class="token punctuation">.</span>play <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">function</span> <span class="token function">dog</span><span class="token punctuation">(</span>type<span class="token punctuation">,</span>name<span class="token punctuation">,</span>age<span class="token punctuation">)</span><span class="token punctuation">{</span>
-     foo<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span>name<span class="token punctuation">,</span>age<span class="token punctuation">)</span>
-   <span class="token keyword">this</span><span class="token punctuation">.</span>type <span class="token operator">=</span>type
-<span class="token punctuation">}</span>
-dog<span class="token punctuation">.</span>prototype <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>foo<span class="token punctuation">.</span>prototype<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  dog<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>constructor <span class="token operator">=</span> dog<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 重新吧constructor 指向原来的dog</span></code></pre>
+<h4 id="Pragma"><a href="#Pragma" class="headerlink" title="Pragma"></a>Pragma</h4><p><code>Pragma</code>只有一个属性值就是<code>no-cache</code>,这个属性跟<code>Cache-control</code>中的<code>no-cache</code>一样就是不使用<code>强缓存</code></p>
+<h4 id="验证环节"><a href="#验证环节" class="headerlink" title="验证环节"></a>验证环节</h4><p>本文采用<code>express</code>作为服务端(主要<code>KOA</code>没有找到关闭<code>弱缓存</code>的方法….)还是太菜了</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">const</span> express <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'express'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">express</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> options <span class="token operator">=</span> <span class="token punctuation">{</span> 
+  etag<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// 禁用协商缓存</span>
+  lastModified<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// 禁用协商缓存</span>
+  setHeaders<span class="token punctuation">:</span> <span class="token punctuation">(</span>res<span class="token punctuation">,</span> path<span class="token punctuation">,</span> stat<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    res<span class="token punctuation">.</span><span class="token keyword">set</span><span class="token punctuation">(</span><span class="token string">'Cache-Control'</span><span class="token punctuation">,</span> <span class="token string">'max-age=100'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 强缓存超时时间为10秒</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>express<span class="token punctuation">.</span><span class="token keyword">static</span><span class="token punctuation">(</span><span class="token punctuation">(</span>__dirname <span class="token operator">+</span> <span class="token string">'/public'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> options<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<img src="/2020/06/02/tu-jie-http-huan-cun/3.png" class>
+
+<p>第一次加载服务端的响应头中加入了<code>Cache-Control:max-age=100</code>这个字段,也就是强缓存的时间为100秒</p>
+<img src="/2020/06/02/tu-jie-http-huan-cun/4.png" class>
+
+<p>第二次加载(并不是刷新)可以明显看到<code>http</code>状态码中有<code>(from disk cache)</code>的字样。</p>
+<p>加入<code>Pragma</code>后并把值设为<code>no-cache</code>后发现,尽管有<code>max-age</code>但是也会重新请求服务端加载文件。</p>
+<h3 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h3><p>当强缓存没有命中后,并且请求头中设置了<code>If-Modified-Since</code>或者<code>If-None-Match</code>的时候,就会去尝试命中协商缓存,命中后则会返回<code>304</code>状态,加载浏览器缓存,并且响应头会设置<code>Last-Modified</code>或者<code>ETag</code>属性</p>
+<h4 id="Last-Modified-If-Modified-Since"><a href="#Last-Modified-If-Modified-Since" class="headerlink" title="Last-Modified/If-Modified-Since"></a>Last-Modified/If-Modified-Since</h4><p><code>Last-Modified/If-Modified-Since</code>两者都是代表文件的最后修改时间,在第一次请求的时候服务端会返回这个文件的最后修改时间到<code>Last-Modified</code>字段中。在客户端重新请求这个文件的时候会带上一次请求返回的<code>Last-Modified</code>字段的值添加到本次请求头中的<code>If-Modified-Since</code>中,服务端会比较<code>If-Modified-Since</code>和<code>Last-Modified</code>是否相同,相同则返回<code>304</code>读取浏览器缓存。</p>
+<h4 id="ETag-If-None-Match"><a href="#ETag-If-None-Match" class="headerlink" title="ETag/If-None-Match"></a>ETag/If-None-Match</h4><p><code>ETag/If-None-Match</code>的值是一串<code>hash</code>码，代表的是一个资源的标识符，当服务端的文件变化的时候，它的<code>hash</code>码会随之改变，通过请求头中的 <code>If-None-Match</code> 和当前文件的 hash 值进行比较，如果相等则表示命中协商缓存。<code>ETag</code> 又有强弱校验之分，如果 <code>hash</code> 码是以 <code>&quot;W/&quot;</code> 开头的一串字符串，说明此时协商缓存的校验是弱校验的，只有服务器上的文件差异（根据 <code>ETag</code> 计算方式来决定）达到能够触发 <code>hash</code> 值后缀变化的时候，才会真正地请求资源，否则返回 <code>304</code> 并加载浏览器缓存。</p>
 
             </div>
             <hr/>
@@ -572,7 +517,7 @@ dog<span class="token punctuation">.</span>prototype <span class="token operator
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/qiYuei/qiYuei.github.io/2020/05/29/ji-cheng-de-ji-chong-fang-shi/">https://github.com/qiYuei/qiYuei.github.io/2020/05/29/ji-cheng-de-ji-chong-fang-shi/</a>
+                    <a href="https://github.com/qiYuei/qiYuei.github.io/2020/06/02/tu-jie-http-huan-cun/">https://github.com/qiYuei/qiYuei.github.io/2020/06/02/tu-jie-http-huan-cun/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -610,16 +555,16 @@ dog<span class="token punctuation">.</span>prototype <span class="token operator
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%BB%A7%E6%89%BF/">
-                                    <span class="chip bg-color">继承</span>
+                                <a href="/tags/%E5%BC%BA%E7%BC%93%E5%AD%98/">
+                                    <span class="chip bg-color">强缓存</span>
                                 </a>
                             
-                                <a href="/tags/%E5%8E%9F%E5%9E%8B%E9%93%BE/">
-                                    <span class="chip bg-color">原型链</span>
+                                <a href="/tags/%E5%BC%B1%E7%BC%93%E5%AD%98/">
+                                    <span class="chip bg-color">弱缓存</span>
                                 </a>
                             
-                                <a href="/tags/%E5%8E%9F%E5%9E%8B/">
-                                    <span class="chip bg-color">原型</span>
+                                <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">
+                                    <span class="chip bg-color">浏览器</span>
                                 </a>
                             
                         </div>
@@ -661,9 +606,68 @@ dog<span class="token punctuation">.</span>prototype <span class="token operator
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/06/02/tu-jie-http-huan-cun/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="图解HTTP缓存">
+                        
+                        <span class="card-title">图解HTTP缓存</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            前言作为一个合格的前端工程师,且以大厂为目标的程序猿,浏览器的相关工作原理使我们进行性能优化的基石。必须牢牢掌握这才能对瞬息万变的实际场景,针对性地给出实际方案,而不是各种背诵(掘金上混脸熟)的开发’军规’和性能优化常见条例。这样很难真正发
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-02
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87%E7%B3%BB%E5%88%97/" class="post-category">
+                                    面试必备系列
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%BC%BA%E7%BC%93%E5%AD%98/">
+                        <span class="chip bg-color">强缓存</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%BC%B1%E7%BC%93%E5%AD%98/">
+                        <span class="chip bg-color">弱缓存</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">
+                        <span class="chip bg-color">浏览器</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2020/05/29/er-fen-cha-zhao/">
                     <div class="card-image">
@@ -682,9 +686,9 @@ dog<span class="token punctuation">.</span>prototype <span class="token operator
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-29
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -706,63 +710,6 @@ dog<span class="token punctuation">.</span>prototype <span class="token operator
                     
                     <a href="/tags/%E7%AE%97%E6%B3%95/">
                         <span class="chip bg-color">算法</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/05/28/cong-0-kai-shi-shi-xian-yi-ge-promise/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="从0开始实现一个Promise">
-                        
-                        <span class="card-title">从0开始实现一个Promise</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            概述在早期处理异步的方式都是采用回调函数的形式,比如nodeApi,多个回调中就形成了回调多层嵌套(也叫回调地狱)。后来出现的generater和Promise解决了回调地狱的问题。Promise 是 JavaScript 异步编程的一种流
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-28
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97/" class="post-category">
-                                    手写系列
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Promise/">
-                        <span class="chip bg-color">Promise</span>
-                    </a>
-                    
-                    <a href="/tags/%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8/">
-                        <span class="chip bg-color">链式调用</span>
-                    </a>
-                    
-                    <a href="/tags/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">
-                        <span class="chip bg-color">观察者模式</span>
                     </a>
                     
                 </div>
