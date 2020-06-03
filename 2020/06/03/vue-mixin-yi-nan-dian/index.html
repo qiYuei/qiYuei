@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="图解HTTP缓存, qiYuei">
+    <meta name="keywords" content="Vue-Mixin疑难点, qiYuei">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>图解HTTP缓存 | qiYuei</title>
+    <title>Vue-Mixin疑难点 | qiYuei</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -264,12 +264,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">图解HTTP缓存</h1>
+                    <h1 class="description center-align post-title">Vue-Mixin疑难点</h1>
                 </div>
             </div>
         </div>
@@ -394,16 +394,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%BC%BA%E7%BC%93%E5%AD%98/">
-                                <span class="chip bg-color">强缓存</span>
+                            <a href="/tags/mixin/">
+                                <span class="chip bg-color">mixin</span>
                             </a>
                         
-                            <a href="/tags/%E5%BC%B1%E7%BC%93%E5%AD%98/">
-                                <span class="chip bg-color">弱缓存</span>
+                            <a href="/tags/%E6%BA%90%E7%A0%81/">
+                                <span class="chip bg-color">源码</span>
                             </a>
                         
-                            <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">
-                                <span class="chip bg-color">浏览器</span>
+                            <a href="/tags/%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE/">
+                                <span class="chip bg-color">灵魂拷问</span>
                             </a>
                         
                     </div>
@@ -414,8 +414,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87%E7%B3%BB%E5%88%97/" class="post-category">
-                                面试必备系列
+                            <a href="/categories/Vue/" class="post-category">
+                                Vue
                             </a>
                         
                     </div>
@@ -427,7 +427,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-06-02
+                    2020-06-03
                 </div>
                 
 
@@ -436,7 +436,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    1.1k
                 </div>
                 
 
@@ -453,45 +453,103 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>作为一个合格的前端工程师,且以大厂为目标的程序猿,浏览器的相关工作原理使我们进行性能优化的基石。必须牢牢掌握这才能对瞬息万变的实际场景,针对性地给出实际方案,而不是各种背诵(掘金上混脸熟)的开发’军规’和性能优化常见条例。这样很难真正发现问题所在。自己也得不到实质性的提升。</p>
-<p>HTTP缓存分为两种<code>强缓存</code>和<code>协商缓存</code>。两者的作用都是加快资源获取,提升用户体验,减少网络连接,缓解服务器的压力。还有这里的缓存是指<code>文件文件</code>!!!并不是指平时后端从服务器拿出来的数据。</p>
-<img src="/2020/06/02/tu-jie-http-huan-cun/1.png" class>
+                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这个API在<code>vue</code>官方文档的解释是<code>混入</code>,字面意思就是合并对吧!!!昨天笔试了一道题,就是关于<code>mixin</code>的一些理解。这个API在一般情况下我都没用用到…如果是重复的逻辑都是单独抽取当组件使用…所以昨天那道题简直就是<code>灵魂拷问</code>当时的我就是一脸懵逼。笔试完抓紧重新翻了下<code>vue</code>文档,重新拾起这部分知识记录一下</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><img src="/2020/06/03/vue-mixin-yi-nan-dian/1.png" class>
 
-<p>又到了看图说话的时候了,我们都知道我们请求文件是发送<code>get</code>请求,在发起的时候<code>浏览器</code>就回去找请求头是否开启了<code>强缓存</code>。没开启就直接进去<code>弱缓存</code>阶段了。如果开启了就回去比对<code>强缓存的标志</code>是否过期之类的,没有过期则直接读取<code>缓存</code>这时候状态码是<code>200</code>(实际上并没有发请求)！紧接着过期了,那就必须发送一个请求去服务器了。这就到了<code>弱缓存</code>阶段。这时候就会询问服务器<code>我所请求的文件是否更新了</code>如果没更新则会返回<code>304</code>告诉浏览器<code>文件没有更新</code>。更新了则返回<code>200</code>让浏览器缓存新的文件。</p>
-<h4 id="强缓存"><a href="#强缓存" class="headerlink" title="强缓存"></a>强缓存</h4><p>不需要发送网络连接给服务器,直接读取本地的缓存。缓存可以从<code>硬盘</code>或者<code>内存</code>中。这是由浏览器决定的。但是强缓存是由<code>Expires</code>、<code>Cache-control</code>、<code>Prage</code>3个属性来控制的。</p>
-<h4 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h4><p><code>Expires</code>也就是过期时间,这里通常会设置一个时间戳<code>Tue, 02 Jun 2020 04:12:42 GMT</code>但是这个属性有严重的缺陷就是如果服务器时间跟本地时间不同的话(时区)这个字段就没有任何意义了。所以这个字段在<code>http1.1</code>是采用<code>Cache-control</code>来控制。<code>Expires</code>优先级最低</p>
-<h4 id="Cache-control"><a href="#Cache-control" class="headerlink" title="Cache-control"></a>Cache-control</h4><p><code>Cache-control</code>这个属性是<code>http1.1</code>新增,在响应头和请求头中都可以设置。常见的属性有</p>
+<img src="/2020/06/03/vue-mixin-yi-nan-dian/2.png" class>
+
+<p>就是根据上图写出输出结果。当时看了就一脸懵逼。我先还原下我当时的想法首先它在入口处添加了一个全局的<code>mixin</code>。紧接着又重新<code>new Vue()</code>实例里面也有相同的逻辑,也渲染了<code>app</code>这个组件。因为看过部分的<code>源码</code>,所以知道<code>Vue</code>内部初始化的时候是先初始化<code>mixin</code>,调用<code>beforeCreate</code>,最后在初始化一些<code>props、data、methods</code>等东西。在初始化的时候如果它有<code>mixin</code>就会合并这些内容。那问题来了既然要合并如何合并?</p>
 <ul>
-<li>max-age: 单位是秒,缓存时间计算方式是距离上一次发起时间的秒数,超过间隔的秒数缓存失效</li>
-<li>no-cache: 禁止使用强缓存</li>
-<li>no-store: 禁止使用缓存(包括协商缓存)</li>
-<li>private: 专用于个人的缓存,中间代理,CDN等不能缓存响应</li>
-<li>public: 响应可以被中间代理、CDN等缓存</li>
-<li>must-revalidate: 在缓存过期前可以使用,过期后必须向服务器验证</li>
+<li>钩子是否会合并</li>
+<li>data中怎么合并</li>
+<li>components/methods/directives…等的合并策略</li>
+<li>组件和Mixin的优先级</li>
 </ul>
-<h4 id="Pragma"><a href="#Pragma" class="headerlink" title="Pragma"></a>Pragma</h4><p><code>Pragma</code>只有一个属性值就是<code>no-cache</code>,这个属性跟<code>Cache-control</code>中的<code>no-cache</code>一样就是不使用<code>强缓存</code></p>
-<h4 id="验证环节"><a href="#验证环节" class="headerlink" title="验证环节"></a>验证环节</h4><p>本文采用<code>express</code>作为服务端(主要<code>KOA</code>没有找到关闭<code>弱缓存</code>的方法….)还是太菜了</p>
-<pre class=" language-js"><code class="language-js"><span class="token keyword">const</span> express <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'express'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">express</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">var</span> options <span class="token operator">=</span> <span class="token punctuation">{</span> 
-  etag<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// 禁用协商缓存</span>
-  lastModified<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">// 禁用协商缓存</span>
-  setHeaders<span class="token punctuation">:</span> <span class="token punctuation">(</span>res<span class="token punctuation">,</span> path<span class="token punctuation">,</span> stat<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
-    res<span class="token punctuation">.</span><span class="token keyword">set</span><span class="token punctuation">(</span><span class="token string">'Cache-Control'</span><span class="token punctuation">,</span> <span class="token string">'max-age=100'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 强缓存超时时间为10秒</span>
-  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>express<span class="token punctuation">.</span><span class="token keyword">static</span><span class="token punctuation">(</span><span class="token punctuation">(</span>__dirname <span class="token operator">+</span> <span class="token string">'/public'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> options<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<img src="/2020/06/02/tu-jie-http-huan-cun/3.png" class>
+<h4 id="关于数据对象-data"><a href="#关于数据对象-data" class="headerlink" title="关于数据对象(data)"></a>关于数据对象(data)</h4><blockquote>
+<p>当组件和混入对象含有同名选项时，这些选项将以恰当的方式进行“合并”。<br>比如，数据对象在内部会进行递归合并，并在发生冲突时以组件数据优先。</p>
+</blockquote>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// mixin</span>
+<span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+     <span class="token keyword">return</span> <span class="token punctuation">{</span>
+          name<span class="token punctuation">:</span><span class="token string">'mixin'</span>
+     <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// app.js</span>
+<span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+     <span class="token keyword">return</span> <span class="token punctuation">{</span>
+          name<span class="token punctuation">:</span><span class="token string">'app'</span>
+     <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+mixin<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">'mixin'</span><span class="token punctuation">]</span>
+<span class="token punctuation">{</span><span class="token punctuation">{</span> name <span class="token punctuation">}</span><span class="token punctuation">}</span>  <span class="token comment" spellcheck="true">// => app </span></code></pre>
+<h4 id="钩子函数"><a href="#钩子函数" class="headerlink" title="钩子函数"></a>钩子函数</h4><blockquote>
+<p>钩子函数也就是生命周期,这时候Vue在处理的时候会将他们合并成一个数组,并且mixin中的钩子会比组件中的mixin优先执行</p>
+</blockquote>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// mixin</span>
+<span class="token function">created</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+     console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'mixin created'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// app.js</span>
+<span class="token function">created</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+     console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'app created'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// 执行后  mixin created -  app created</span></code></pre>
+<h4 id="components-methods-directives…等的合并策略"><a href="#components-methods-directives…等的合并策略" class="headerlink" title="components/methods/directives…等的合并策略"></a>components/methods/directives…等的合并策略</h4><blockquote>
+<p>值为对象的选项，例如 methods、components 和 directives，将被合并为同一个对象。两个对象键名冲突时，取组件对象的键值对。</p>
+</blockquote>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// mixin</span>
+methods<span class="token punctuation">:</span><span class="token punctuation">{</span>
+   <span class="token function">click</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'mixin click'</span><span class="token punctuation">)</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// app</span>
+mixin<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">'mixin'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+methods<span class="token punctuation">:</span><span class="token punctuation">{</span>
+    <span class="token function">click</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'app click'</span><span class="token punctuation">)</span>
+   <span class="token punctuation">}</span> 
+<span class="token punctuation">}</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">click</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//=> app click</span></code></pre>
+<h4 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h4><p>有了这些储备知识,开始尝试重新做那道题</p>
+<pre class=" language-js"><code class="language-js"><span class="token string">'我是mixin 的beforeCreate'</span>
+<span class="token string">'我是mixin 的data'</span>
+<span class="token string">'我是mixin 的beforeCreate'</span>
+<span class="token string">'我是app 的beforeCreate'</span>
+<span class="token string">'我是app 的data'</span>
+<span class="token string">'我是mixin 的data'</span>
+<span class="token string">'我是mixin 的mounted'</span>
+<span class="token string">'我是app 的mounted'</span>
+<span class="token string">'我是mixin 的mounted'</span></code></pre>
+<p>首先是全局的<code>mixin</code>在<code>new Vue()</code>的时候会执行一次,控制台输出</p>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// '我是mixin 的beforeCreate'</span>
+<span class="token comment" spellcheck="true">// '我是mixin 的data'</span></code></pre>
+<p>然后在<code>new Vue()</code>的时候有一个<code>render()函数</code>,根据创建周期<code>父created-&gt;子created-&gt;子mounted-&gt;父mounted</code>的流程所以会进入到<code>APP</code>组件打印`</p>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// '我是mixin 的beforeCreate'</span>
+<span class="token comment" spellcheck="true">// '我是app 的beforeCreate'</span></code></pre>
+<p>这是因为<code>引入的是全局Mixin</code>这就相当于每个组件都会加载这个<code>Mixin</code>。紧接着就是</p>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// '我是app 的data'</span>
+<span class="token comment" spellcheck="true">// '我是mixin 的data'</span></code></pre>
+<p>下面就会进入正常的子组件挂载</p>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// '我是mixin 的mounted'</span>
+<span class="token comment" spellcheck="true">// '我是app 的mounted'</span></code></pre>
+<p>最后打印,这个别忘了!!! 这是在初始化的时候也就是在<code>new Vue()</code>的时期还未执行的钩子函数</p>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// '我是mixin 的mounted'</span></code></pre>
+<p>其实在这里就可以得出<code>Mixin</code>在挂载在全局上的副作用有多大！</p>
+<h3 id="源码学习"><a href="#源码学习" class="headerlink" title="源码学习"></a>源码学习</h3><p>我认为遇到一个问题不能单单只是表面上解决就完事了,还要深入源码中学习是如何判断这些优先级以及合并操作的。这样才能够提高自身。而不是单纯的做一个码农…毕竟咱是以进<code>大厂</code>为目标的。</p>
+<p>首先找到全局定义的<code>Mixin</code>,文件位置在<code>vue/src/core/global-api/mixin.js</code></p>
+<img src="/2020/06/03/vue-mixin-yi-nan-dian/3.png" class>
 
-<p>第一次加载服务端的响应头中加入了<code>Cache-Control:max-age=100</code>这个字段,也就是强缓存的时间为100秒</p>
-<img src="/2020/06/02/tu-jie-http-huan-cun/4.png" class>
+<p>这里很明显首先<code>this.options</code>就是<code>Vue</code>上面的<code>options</code>也就是<code>new Vue({})</code>传递的参数,先吧这个先合并是为了在<code>new Vue()</code>的时候就执行<code>Mixin里面的钩子</code>。这里就一个合并函数路径在<code>vue/src/core/util/options.js</code></p>
+<img src="/2020/06/03/vue-mixin-yi-nan-dian/4.png" class>
+<p>重点的地方已经加上注释,其中<code>strats</code>这个对象设置的是非常的妙从<code>传递的key</code>去执行不同的策略</p>
+<img src="/2020/06/03/vue-mixin-yi-nan-dian/5.png" class>
 
-<p>第二次加载(并不是刷新)可以明显看到<code>http</code>状态码中有<code>(from disk cache)</code>的字样。</p>
-<p>加入<code>Pragma</code>后并把值设为<code>no-cache</code>后发现,尽管有<code>max-age</code>但是也会重新请求服务端加载文件。</p>
-<h3 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h3><p>当强缓存没有命中后,并且请求头中设置了<code>If-Modified-Since</code>或者<code>If-None-Match</code>的时候,就会去尝试命中协商缓存,命中后则会返回<code>304</code>状态,加载浏览器缓存,并且响应头会设置<code>Last-Modified</code>或者<code>ETag</code>属性</p>
-<h4 id="Last-Modified-If-Modified-Since"><a href="#Last-Modified-If-Modified-Since" class="headerlink" title="Last-Modified/If-Modified-Since"></a>Last-Modified/If-Modified-Since</h4><p><code>Last-Modified/If-Modified-Since</code>两者都是代表文件的最后修改时间,在第一次请求的时候服务端会返回这个文件的最后修改时间到<code>Last-Modified</code>字段中。在客户端重新请求这个文件的时候会带上一次请求返回的<code>Last-Modified</code>字段的值添加到本次请求头中的<code>If-Modified-Since</code>中,服务端会比较<code>If-Modified-Since</code>和<code>Last-Modified</code>是否相同,相同则返回<code>304</code>读取浏览器缓存。</p>
-<h4 id="ETag-If-None-Match"><a href="#ETag-If-None-Match" class="headerlink" title="ETag/If-None-Match"></a>ETag/If-None-Match</h4><p><code>ETag/If-None-Match</code>的值是一串<code>hash</code>码，代表的是一个资源的标识符，当服务端的文件变化的时候，它的<code>hash</code>码会随之改变，通过请求头中的 <code>If-None-Match</code> 和当前文件的 hash 值进行比较，如果相等则表示命中协商缓存。<code>ETag</code> 又有强弱校验之分，如果 <code>hash</code> 码是以 <code>&quot;W/&quot;</code> 开头的一串字符串，说明此时协商缓存的校验是弱校验的，只有服务器上的文件差异（根据 <code>ETag</code> 计算方式来决定）达到能够触发 <code>hash</code> 值后缀变化的时候，才会真正地请求资源，否则返回 <code>304</code> 并加载浏览器缓存。</p>
+<h4 id="合并生命周期"><a href="#合并生命周期" class="headerlink" title="合并生命周期"></a>合并生命周期</h4><p><code>Mixin</code>中并不会覆盖组件的钩子,并且<code>Mixin</code>中的钩子会比组件中的优先执行</p>
+<img src="/2020/06/03/vue-mixin-yi-nan-dian/6.png" class>
+
+<p>Chrome的debugger结果示意图</p>
+<img src="/2020/06/03/vue-mixin-yi-nan-dian/7.png" class>
 
             </div>
             <hr/>
@@ -517,7 +575,7 @@ app<span class="token punctuation">.</span><span class="token function">listen</
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/qiYuei/qiYuei.github.io/2020/06/02/tu-jie-http-huan-cun/">https://github.com/qiYuei/qiYuei.github.io/2020/06/02/tu-jie-http-huan-cun/</a>
+                    <a href="https://github.com/qiYuei/qiYuei.github.io/2020/06/03/vue-mixin-yi-nan-dian/">https://github.com/qiYuei/qiYuei.github.io/2020/06/03/vue-mixin-yi-nan-dian/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -555,16 +613,16 @@ app<span class="token punctuation">.</span><span class="token function">listen</
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%BC%BA%E7%BC%93%E5%AD%98/">
-                                    <span class="chip bg-color">强缓存</span>
+                                <a href="/tags/mixin/">
+                                    <span class="chip bg-color">mixin</span>
                                 </a>
                             
-                                <a href="/tags/%E5%BC%B1%E7%BC%93%E5%AD%98/">
-                                    <span class="chip bg-color">弱缓存</span>
+                                <a href="/tags/%E6%BA%90%E7%A0%81/">
+                                    <span class="chip bg-color">源码</span>
                                 </a>
                             
-                                <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">
-                                    <span class="chip bg-color">浏览器</span>
+                                <a href="/tags/%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE/">
+                                    <span class="chip bg-color">灵魂拷问</span>
                                 </a>
                             
                         </div>
@@ -606,9 +664,10 @@ app<span class="token punctuation">.</span><span class="token function">listen</
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/06/03/vue-mixin-yi-nan-dian/">
                     <div class="card-image">
@@ -626,9 +685,9 @@ app<span class="token punctuation">.</span><span class="token function">listen</
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-03
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-03
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -641,6 +700,7 @@ app<span class="token punctuation">.</span><span class="token function">listen</
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -667,25 +727,24 @@ app<span class="token punctuation">.</span><span class="token function">listen</
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/05/29/er-fen-cha-zhao/">
+                <a href="/2020/06/02/tu-jie-http-huan-cun/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="二分查找">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="图解HTTP缓存">
                         
-                        <span class="card-title">二分查找</span>
+                        <span class="card-title">图解HTTP缓存</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            前言二分查找也称折半查找（Binary Search），它是一种效率较高的查找方法。但是，折半查找要求线性表必须采用顺序存储结构，而且表中元素按关键字有序排列。重点是有序
-边界情况let binarySearch = (arr, targe
+                            前言作为一个合格的前端工程师,且以大厂为目标的程序猿,浏览器的相关工作原理使我们进行性能优化的基石。必须牢牢掌握这才能对瞬息万变的实际场景,针对性地给出实际方案,而不是各种背诵(掘金上混脸熟)的开发’军规’和性能优化常见条例。这样很难真正发
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-29
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-02
                             </span>
                         <span class="publish-author">
                             
@@ -702,12 +761,16 @@ app<span class="token punctuation">.</span><span class="token function">listen</
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/">
-                        <span class="chip bg-color">二分查找</span>
+                    <a href="/tags/%E5%BC%BA%E7%BC%93%E5%AD%98/">
+                        <span class="chip bg-color">强缓存</span>
                     </a>
                     
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
+                    <a href="/tags/%E5%BC%B1%E7%BC%93%E5%AD%98/">
+                        <span class="chip bg-color">弱缓存</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">
+                        <span class="chip bg-color">浏览器</span>
                     </a>
                     
                 </div>
