@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title> Vue源码(一)-响应式原理</title>
+      <link href="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/"/>
+      <url>/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/</url>
+      
+        <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近也是一直学习 <code>Vue</code> 的源码,也看了许多机构解析源码的视频(大部分都是白嫖~但是珠峰讲的是真的不错)。但是光看他们讲是没用滴,我们想要提 <code>(wei)高(le)自(mian)身(shi)</code> ,则需要将他们所讲再加上我们自己的理解。形成自己对 <code>Vue</code> 不说有一套独特见解,但也需要讲得出一二。</p><h3 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h3><p><code>vue</code> 的入口就不说啦,在 <code>/src/core/instance/index.js</code> 中明明白白写了 <code>Vue</code> 的构造函数,然后在这里执行了化一些系列功能。今天所要探讨的相应是也在 <code>initMixin(Vue)</code> 中得到初始化。<br><code>路径 /src/core/instance/state.js</code></p><img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/entry.png" class><p><code>没错,在调用observe(data, true /* asRootData */)  //响应式</code> 就是在把我们定义的 <code>data</code> 进行数据劫持,在劫持前Vue也有一些值得注意的优化点。</p><h3 id="Observer类"><a href="#Observer类" class="headerlink" title="Observer类"></a>Observer类</h3><p><code>路径 /src/core/observer/index.js</code></p><img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/observe.png" class><p><code>def 函数</code>是⼀个⾮常简单的 <code>Object.defineProperty</code> 的封装，这就是为什么我在开发中输出 <code>data</code> 上对象类型的数据，会发现该对象多了⼀个 <code>__ob__</code> 的属性。</p><p> <code>调用Observer类</code> 实质上就是将 <code>data</code> 中定义的每一个 <code>key</code> 通过 <code>defineProperty</code> 来修改相对应的 <code>get</code> 和<code>set</code> 来做到所谓的数据劫持。但是道理我们都懂但是它具体是怎么做的呢？</p><img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/newObserver.png" class><h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><p><code>路径 /src/core/observer/array.js</code></p><p>由于 <code>Object.defineProperty()</code> 不能够为数组进行劫持,然而数组这种数据结构又是我们日常用的最多的数据结构之一。所以<code>Vue</code> 通过修改 <code>数组原来的原型链</code> 。假如修改后的原型链为 <code>prtototype1</code> 。我们调用 <code>this.arr.push()</code> =&gt; <code>this.arr.protype1.push()</code></p><img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/array.png" class><h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><p><code>路径 /src/core/observer/index.js</code></p><p>对于对象来说,有天然的 <code>Object.defineProperty</code> 加持在所以就直接就可以了。</p><pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">/**   * Walk through all properties and convert them into   * getter/setters. This method should only be called when   * value type is Object.   */</span>  walk <span class="token punctuation">(</span>obj<span class="token punctuation">:</span> Object<span class="token punctuation">)</span> <span class="token punctuation">{</span>     <span class="token keyword">const</span> keys <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span>    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> keys<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>      <span class="token function">defineReactive</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> keys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 为每一个熟悉进行Object.defineProperty()</span>    <span class="token punctuation">}</span>  <span class="token punctuation">}</span></code></pre><p>哦豁重头戏来了, <code>defineReactive()</code> 是响应式的核心方法,通过 <code>递归</code> 对每个属性进行劫持,这也是这个 <code>Vue2.x</code> 的一个的缺点吧。在层级深的情况下，这里花费的时间就很长</p><img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/defineReactive.png" class><img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/get.png" class><img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/set.png" class><p>够成响应式中不可缺少的就是 <code>watcher</code> 和 <code>dep</code> 这一观察者模式的最佳体现。<code>this.name</code> 则会触发 <code>name</code>属性的 <code>get</code> 而在每一次触发 <code>get</code> 都会 <code>new Dep()</code> 记录下这种依赖方式。 当 <code>this.name = xxxx</code> 时则会触发 <code>name</code> 属性的 <code>set</code> 而每次触发 <code>set</code> 都会 <code>dep.notify()</code> 来通知这个值依赖的地方 进行视图更新。</p><h3 id="Watcher类"><a href="#Watcher类" class="headerlink" title="Watcher类"></a>Watcher类</h3><p>未完待续</p><h3 id="dep类"><a href="#dep类" class="headerlink" title="dep类"></a>dep类</h3><img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/dep.png" class>]]></content>
+      
+      
+      <categories>
+          
+          <category> 源码分析 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 响应式 </tag>
+            
+            <tag> Vue2.x源码 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>从URL到页面展示发生了什么</title>
       <link href="/2020/06/18/cong-url-dao-ye-mian-zhan-shi-fa-sheng-liao-shi-me/"/>
       <url>/2020/06/18/cong-url-dao-ye-mian-zhan-shi-fa-sheng-liao-shi-me/</url>
@@ -78,11 +105,11 @@
             
             <tag> 计算机网络 </tag>
             
+            <tag> 浏览器 </tag>
+            
             <tag> 强缓存 </tag>
             
             <tag> 弱缓存 </tag>
-            
-            <tag> 浏览器 </tag>
             
         </tags>
       

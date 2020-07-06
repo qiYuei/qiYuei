@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="二分查找, qiYuei">
+    <meta name="keywords" content=" Vue源码(一)-响应式原理, qiYuei">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>二分查找 | qiYuei</title>
+    <title> Vue源码(一)-响应式原理 | qiYuei</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -264,12 +264,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">二分查找</h1>
+                    <h1 class="description center-align post-title"> Vue源码(一)-响应式原理</h1>
                 </div>
             </div>
         </div>
@@ -394,12 +394,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/">
-                                <span class="chip bg-color">二分查找</span>
+                            <a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F/">
+                                <span class="chip bg-color">响应式</span>
                             </a>
                         
-                            <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                <span class="chip bg-color">算法</span>
+                            <a href="/tags/Vue2-x%E6%BA%90%E7%A0%81/">
+                                <span class="chip bg-color">Vue2.x源码</span>
                             </a>
                         
                     </div>
@@ -410,8 +410,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87%E7%B3%BB%E5%88%97/" class="post-category">
-                                面试必备系列
+                            <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-category">
+                                源码分析
                             </a>
                         
                     </div>
@@ -423,7 +423,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-05-29
+                    2020-07-06
                 </div>
                 
 
@@ -432,14 +432,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    243
+                    690
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -449,34 +449,53 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>二分查找也称折半查找（Binary Search），它是一种效率较高的查找方法。但是，折半查找要求线性表必须采用顺序存储结构，而且表中元素按关键字有序排列。重点是<code>有序</code></p>
-<h3 id="边界情况"><a href="#边界情况" class="headerlink" title="边界情况"></a>边界情况</h3><pre class=" language-js"><code class="language-js"><span class="token keyword">let</span> binarySearch <span class="token operator">=</span> <span class="token punctuation">(</span>arr<span class="token punctuation">,</span> target<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
-    <span class="token keyword">let</span> begin <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 开始位置</span>
-    <span class="token keyword">let</span> end <span class="token operator">=</span> <span class="token operator">?</span><span class="token operator">?</span><span class="token operator">?</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 结束位置</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">?</span><span class="token operator">?</span><span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">let</span> mid <span class="token operator">=</span> begin <span class="token operator">+</span> <span class="token punctuation">(</span>end <span class="token operator">-</span>begin<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span> 
-        <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">==</span> target<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token comment" spellcheck="true">// 刚好命中</span>
-        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">></span> target<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>  <span class="token comment" spellcheck="true">// 目标值在 mid 下标左边</span>
-        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&lt;</span> target<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>  <span class="token comment" spellcheck="true">// 目标值在 mid 下标右边</span>
+                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近也是一直学习 <code>Vue</code> 的源码,也看了许多机构解析源码的视频(大部分都是白嫖~但是珠峰讲的是真的不错)。但是光看他们讲是没用滴,我们想要提 <code>(wei)高(le)自(mian)身(shi)</code> ,则需要将他们所讲再加上我们自己的理解。形成自己对 <code>Vue</code> 不说有一套独特见解,但也需要讲得出一二。</p>
+<h3 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h3><p><code>vue</code> 的入口就不说啦,在 <code>/src/core/instance/index.js</code> 中明明白白写了 <code>Vue</code> 的构造函数,然后在这里执行了化一些系列功能。今天所要探讨的相应是也在 <code>initMixin(Vue)</code> 中得到初始化。<br><code>路径 /src/core/instance/state.js</code></p>
+<img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/entry.png" class>
+
+<p><code>没错,在调用observe(data, true /* asRootData */)  //响应式</code> 就是在把我们定义的 <code>data</code> 进行数据劫持,在劫持前Vue也有一些值得注意的优化点。</p>
+<h3 id="Observer类"><a href="#Observer类" class="headerlink" title="Observer类"></a>Observer类</h3><p><code>路径 /src/core/observer/index.js</code></p>
+<img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/observe.png" class>
+
+<p><code>def 函数</code>是⼀个⾮常简单的 <code>Object.defineProperty</code> 的封装，这就是为什么我在开发中输出 <code>data</code> 上对象类型的数据，会发现该对象多了⼀个 <code>__ob__</code> 的属性。</p>
+<p> <code>调用Observer类</code> 实质上就是将 <code>data</code> 中定义的每一个 <code>key</code> 通过 <code>defineProperty</code> 来修改相对应的 <code>get</code> 和<code>set</code> 来做到所谓的数据劫持。但是道理我们都懂但是它具体是怎么做的呢？</p>
+<img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/newObserver.png" class>
+
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><p><code>路径 /src/core/observer/array.js</code></p>
+<p>由于 <code>Object.defineProperty()</code> 不能够为数组进行劫持,然而数组这种数据结构又是我们日常用的最多的数据结构之一。所以<code>Vue</code> 通过修改 <code>数组原来的原型链</code> 。假如修改后的原型链为 <code>prtototype1</code> 。我们调用 <code>this.arr.push()</code> =&gt; <code>this.arr.protype1.push()</code></p>
+<img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/array.png" class>
+
+<h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><p><code>路径 /src/core/observer/index.js</code></p>
+<p>对于对象来说,有天然的 <code>Object.defineProperty</code> 加持在所以就直接就可以了。</p>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">/**
+   * Walk through all properties and convert them into
+   * getter/setters. This method should only be called when
+   * value type is Object.
+   */</span>
+  walk <span class="token punctuation">(</span>obj<span class="token punctuation">:</span> Object<span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+    <span class="token keyword">const</span> keys <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> keys<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">defineReactive</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> keys<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 为每一个熟悉进行Object.defineProperty()</span>
     <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> <span class="token operator">?</span><span class="token operator">?</span><span class="token operator">?</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 没找到的情况</span>
-<span class="token punctuation">}</span></code></pre>
-<p>事实上 二分法的结构就是这么简单,主要是<code>边界情况的处理</code></p>
-<pre class=" language-js"><code class="language-js"><span class="token keyword">let</span> binarySearch <span class="token operator">=</span> <span class="token punctuation">(</span>arr<span class="token punctuation">,</span>target<span class="token punctuation">)</span><span class="token operator">=</span><span class="token operator">></span><span class="token punctuation">{</span>
-   <span class="token keyword">let</span> start <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-   <span class="token keyword">let</span> end <span class="token operator">=</span> arr<span class="token punctuation">.</span>length <span class="token comment" spellcheck="true">// 这里是最后 数组的长度相当于 0 - 最后</span>
-   <span class="token keyword">while</span><span class="token punctuation">(</span>start <span class="token operator">&lt;</span> end<span class="token punctuation">)</span><span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">// 这里就必须 start &lt; 数组长度 也不能等于 </span>
-      <span class="token keyword">let</span> mid <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>start <span class="token operator">+</span> end<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">)</span>
-      <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span><span class="token operator">===</span>target<span class="token punctuation">)</span><span class="token punctuation">{</span>
-          <span class="token keyword">return</span> mid
-      <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">></span> target<span class="token punctuation">)</span><span class="token punctuation">{</span>
-          end <span class="token operator">=</span> mid<span class="token number">-1</span>
-      <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&lt;</span> target<span class="token punctuation">)</span><span class="token punctuation">{</span>
-          start <span class="token operator">=</span> mid <span class="token operator">+</span><span class="token number">1</span>
-      <span class="token punctuation">}</span>
-   <span class="token punctuation">}</span>
-   <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>
-<span class="token punctuation">}</span></code></pre>
+  <span class="token punctuation">}</span></code></pre>
+<p>哦豁重头戏来了, <code>defineReactive()</code> 是响应式的核心方法,通过 <code>递归</code> 对每个属性进行劫持,这也是这个 <code>Vue2.x</code> 的一个的缺点吧。在层级深的情况下，这里花费的时间就很长</p>
+<img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/defineReactive.png" class>
+
+<img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/get.png" class>
+
+<img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/set.png" class>
+
+<p>够成响应式中不可缺少的就是 <code>watcher</code> 和 <code>dep</code> 这一观察者模式的最佳体现。<code>this.name</code> 则会触发 <code>name</code>属性的 <code>get</code> 而在每一次触发 <code>get</code> 都会 <code>new Dep()</code> 记录下这种依赖方式。 当 <code>this.name = xxxx</code> 时则会触发 <code>name</code> 属性的 <code>set</code> 而每次触发 <code>set</code> 都会 <code>dep.notify()</code> 来通知这个值依赖的地方 进行视图更新。</p>
+<h3 id="Watcher类"><a href="#Watcher类" class="headerlink" title="Watcher类"></a>Watcher类</h3><p>未完待续</p>
+<h3 id="dep类"><a href="#dep类" class="headerlink" title="dep类"></a>dep类</h3><img src="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/dep.png" class>
+
+
+
+
+
+
+
+
 
             </div>
             <hr/>
@@ -502,7 +521,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/qiYuei/qiYuei.github.io/2020/05/29/er-fen-cha-zhao/">https://github.com/qiYuei/qiYuei.github.io/2020/05/29/er-fen-cha-zhao/</a>
+                    <a href="https://github.com/qiYuei/qiYuei.github.io/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/">https://github.com/qiYuei/qiYuei.github.io/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -540,12 +559,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/">
-                                    <span class="chip bg-color">二分查找</span>
+                                <a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F/">
+                                    <span class="chip bg-color">响应式</span>
                                 </a>
                             
-                                <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                    <span class="chip bg-color">算法</span>
+                                <a href="/tags/Vue2-x%E6%BA%90%E7%A0%81/">
+                                    <span class="chip bg-color">Vue2.x源码</span>
                                 </a>
                             
                         </div>
@@ -587,29 +606,86 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/06/02/tu-jie-http-huan-cun/">
+                <a href="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="图解HTTP缓存">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt=" Vue源码(一)-响应式原理">
                         
-                        <span class="card-title">图解HTTP缓存</span>
+                        <span class="card-title"> Vue源码(一)-响应式原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            前言作为一个合格的前端工程师,且以大厂为目标的程序猿,浏览器的相关工作原理使我们进行性能优化的基石。必须牢牢掌握这才能对瞬息万变的实际场景,针对性地给出实际方案,而不是各种背诵(掘金上混脸熟)的开发’军规’和性能优化常见条例。这样很难真正发
+                            前言最近也是一直学习 Vue 的源码,也看了许多机构解析源码的视频(大部分都是白嫖~但是珠峰讲的是真的不错)。但是光看他们讲是没用滴,我们想要提 (wei)高(le)自(mian)身(shi) ,则需要将他们所讲再加上我们自己的理解。形成自
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-02
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-06
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-category">
+                                    源码分析
+                                </a>
+                            
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F/">
+                        <span class="chip bg-color">响应式</span>
+                    </a>
+                    
+                    <a href="/tags/Vue2-x%E6%BA%90%E7%A0%81/">
+                        <span class="chip bg-color">Vue2.x源码</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/06/18/cong-url-dao-ye-mian-zhan-shi-fa-sheng-liao-shi-me/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="从URL到页面展示发生了什么">
+                        
+                        <span class="card-title">从URL到页面展示发生了什么</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            概述这道面试题其实5 6句话就能搞定,难就难在这个问题能在繁衍出其他的子问题,不管是计算机网络还是浏览器工作原理还有优化方面都可以从这个问题拓展出。
+
+1.DNS 解析:将域名解析成 IP 地址2.TCP 连接：TCP 三次握手3.发送 H
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-18
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -631,74 +707,6 @@
                     
                     <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">
                         <span class="chip bg-color">浏览器</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%BC%BA%E7%BC%93%E5%AD%98/">
-                        <span class="chip bg-color">强缓存</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%BC%B1%E7%BC%93%E5%AD%98/">
-                        <span class="chip bg-color">弱缓存</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/05/29/ji-cheng-de-ji-chong-fang-shi/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="继承的几种方式">
-                        
-                        <span class="card-title">继承的几种方式</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            概述
-面试官：说一说 JS 中的继承方式有哪些？以及各个继承方式的优缺点。首先先来分析下这道面试题的考点有什么？首先是继承,继承有很多种方式基本上都离不开两个概念原型和原型链。然后就是这种继承的优缺点
-
-课前知识原型首先每个JS对象都会有一
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-29
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87%E7%B3%BB%E5%88%97/" class="post-category">
-                                    面试必备系列
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E7%BB%A7%E6%89%BF/">
-                        <span class="chip bg-color">继承</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%8E%9F%E5%9E%8B%E9%93%BE/">
-                        <span class="chip bg-color">原型链</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%8E%9F%E5%9E%8B/">
-                        <span class="chip bg-color">原型</span>
                     </a>
                     
                 </div>
