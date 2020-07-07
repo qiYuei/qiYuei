@@ -432,14 +432,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.8k
+                    3.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    9 分
+                    11 分
                 </div>
                 
 
@@ -497,7 +497,36 @@
 <li>https的握手阶段比较费时间，延长页面加载时间</li>
 <li>ssl需要绑定服务器ip,不能再同一个ip上绑定多个域名</li>
 </ul>
-<h1 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h1><h2 id="为什么解析JS文件的时候会阻碍DOM的解析"><a href="#为什么解析JS文件的时候会阻碍DOM的解析" class="headerlink" title="为什么解析JS文件的时候会阻碍DOM的解析"></a>为什么解析JS文件的时候会阻碍DOM的解析</h2><h2 id="有什么办法能让JS异步加载"><a href="#有什么办法能让JS异步加载" class="headerlink" title="有什么办法能让JS异步加载"></a>有什么办法能让JS异步加载</h2><h2 id="导致页面重绘和回流的操作"><a href="#导致页面重绘和回流的操作" class="headerlink" title="导致页面重绘和回流的操作"></a>导致页面重绘和回流的操作</h2><h2 id="怎么计算一个网站首屏的加载时间"><a href="#怎么计算一个网站首屏的加载时间" class="headerlink" title="怎么计算一个网站首屏的加载时间"></a>怎么计算一个网站首屏的加载时间</h2><h2 id="网络请求是如何运行的"><a href="#网络请求是如何运行的" class="headerlink" title="网络请求是如何运行的"></a>网络请求是如何运行的</h2><h1 id="优化篇"><a href="#优化篇" class="headerlink" title="优化篇"></a>优化篇</h1><h2 id="网站的优化手段有哪些"><a href="#网站的优化手段有哪些" class="headerlink" title="网站的优化手段有哪些"></a>网站的优化手段有哪些</h2><h2 id="如果我一个页面拥有大量图片-应该怎么优化"><a href="#如果我一个页面拥有大量图片-应该怎么优化" class="headerlink" title="如果我一个页面拥有大量图片,应该怎么优化"></a>如果我一个页面拥有大量图片,应该怎么优化</h2>
+<h1 id="浏览器篇"><a href="#浏览器篇" class="headerlink" title="浏览器篇"></a>浏览器篇</h1><h2 id="为什么解析JS文件的时候会阻碍DOM的解析"><a href="#为什么解析JS文件的时候会阻碍DOM的解析" class="headerlink" title="为什么解析JS文件的时候会阻碍DOM的解析"></a>为什么解析JS文件的时候会阻碍DOM的解析</h2><p>因为浏览器并不清楚这个文件是否有DOM的相关操作,如果两者一起工作优先级无法确定</p>
+<h2 id="有什么办法能让JS异步加载"><a href="#有什么办法能让JS异步加载" class="headerlink" title="有什么办法能让JS异步加载"></a>有什么办法能让JS异步加载</h2><p>在 <code>&lt;script&gt;&lt;/script&gt;</code> 中加入 <code>async</code> 或者 <code>defer</code> 字段。 两个同时存在时，<code>defer</code> 的优先级更高</p>
+<h3 id="async"><a href="#async" class="headerlink" title="async"></a>async</h3><p><code>async</code> 属性的脚本都在它下载结束之后立刻执行，但执行顺序不能控制，先下载完的先执行</p>
+<h3 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h3><p><code>defer</code> 是在 <code>dom解析</code> 完成后立即执行，按照原本的顺序执行</p>
+<h4 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h4><p>CSS 不会阻塞 DOM 的 <code>解析</code> ，但会<code>阻塞 DOM 渲染</code>。</p>
+<h2 id="导致页面重绘和回流的操作"><a href="#导致页面重绘和回流的操作" class="headerlink" title="导致页面重绘和回流的操作"></a>导致页面重绘和回流的操作</h2><p>重绘不一定会触发回流，回流一定会触发重绘</p>
+<h3 id="重绘"><a href="#重绘" class="headerlink" title="重绘"></a>重绘</h3><p>在对文字的颜色、背景颜色等操作时就会发生重绘,浏览器不需要计算元素几何，跳过回流</p>
+<h3 id="回流"><a href="#回流" class="headerlink" title="回流"></a>回流</h3><ol>
+<li>窗体，字体大小<ul>
+<li>.增加样式表</li>
+</ul>
+</li>
+<li>内容变化</li>
+<li>class属性</li>
+<li>offserWidth 和offsetHeight</li>
+<li>fixed</li>
+</ol>
+<h2 id="怎么计算一个网站首屏的加载时间"><a href="#怎么计算一个网站首屏的加载时间" class="headerlink" title="怎么计算一个网站首屏的加载时间"></a>怎么计算一个网站首屏的加载时间</h2><h1 id="优化篇"><a href="#优化篇" class="headerlink" title="优化篇"></a>优化篇</h1><h2 id="网站的优化手段有哪些"><a href="#网站的优化手段有哪些" class="headerlink" title="网站的优化手段有哪些"></a>网站的优化手段有哪些</h2><ul>
+<li>开启Gzip压缩,(webpack可以直接配置开启,需要后端配合/<em>nginx 需要修改响应头信息</em>/)</li>
+<li>将CSS样式表放在body前面 JS脚本放在最后并添加 <code>async</code> 或 <code>defer</code></li>
+<li>图片懒加载</li>
+<li>将小图片合并成雪碧图</li>
+<li>使用浏览器缓存(服务端添加响应头)</li>
+<li>合并请求</li>
+</ul>
+<h2 id="如果我一个页面拥有大量图片-应该怎么优化"><a href="#如果我一个页面拥有大量图片-应该怎么优化" class="headerlink" title="如果我一个页面拥有大量图片,应该怎么优化"></a>如果我一个页面拥有大量图片,应该怎么优化</h2><ul>
+<li>CDN 加载，可以计算出适配屏幕的宽度，然后去请求相应裁剪好的图片</li>
+<li>图片懒加载</li>
+</ul>
+
             </div>
             <hr/>
 
