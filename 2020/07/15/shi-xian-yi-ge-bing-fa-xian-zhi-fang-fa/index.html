@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="10分钟了解二叉树, qiYuei">
+    <meta name="keywords" content="实现一个并发限制方法, qiYuei">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>10分钟了解二叉树 | qiYuei</title>
+    <title>实现一个并发限制方法 | qiYuei</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -264,12 +264,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">10分钟了解二叉树</h1>
+                    <h1 class="description center-align post-title">实现一个并发限制方法</h1>
                 </div>
             </div>
         </div>
@@ -394,12 +394,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
-                                <span class="chip bg-color">二叉树</span>
+                            <a href="/tags/Promise/">
+                                <span class="chip bg-color">Promise</span>
                             </a>
                         
-                            <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                <span class="chip bg-color">算法</span>
+                            <a href="/tags/%E5%B9%B6%E5%8F%91%E9%99%90%E5%88%B6/">
+                                <span class="chip bg-color">并发限制</span>
                             </a>
                         
                     </div>
@@ -410,8 +410,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87%E7%B3%BB%E5%88%97/" class="post-category">
-                                面试必备系列
+                            <a href="/categories/%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97/" class="post-category">
+                                手写系列
                             </a>
                         
                     </div>
@@ -423,7 +423,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-07-09
+                    2020-07-15
                 </div>
                 
 
@@ -432,7 +432,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    882
+                    948
                 </div>
                 
 
@@ -449,141 +449,82 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>二叉树（Binary tree）是树形结构的一个重要类型。许多实际问题抽象出来的数据结构往往是二叉树形式，即使是一般的树也能简单地转换为二叉树，而且二叉树的存储结构及其算法都较为简单，因此二叉树显得特别重要。二叉树特点是每个结点最多只能有两棵子树，且有左右之分。<br>二叉树是n个有限元素的集合，该集合或者为空、或者由一个称为根（root）的元素及两个不相交的、被分别称为左子树和右子树的二叉树组成，是有序树。当集合为空时，称该二叉树为空二叉树。在二叉树中，一个元素也称作一个结点</p>
-<blockquote>
-<p>总结出来也就是以下几个特性<br> 子节点不能超过两个<br> 必须要有一个根节点<br> 比根小的树永远在左边,比根大的数永远在右边</p>
-</blockquote>
-<h2 id="构造出节点"><a href="#构造出节点" class="headerlink" title="构造出节点"></a>构造出节点</h2><pre class=" language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">Node</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 构建一个节点</span>
-    <span class="token function">constructor</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>data <span class="token operator">=</span> data
-        <span class="token keyword">this</span><span class="token punctuation">.</span>left <span class="token operator">=</span> left
-        <span class="token keyword">this</span><span class="token punctuation">.</span>right <span class="token operator">=</span> right
+                <img src="/2020/07/15/shi-xian-yi-ge-bing-fa-xian-zhi-fang-fa/1.png" class>
+
+<h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><p>这道题应该是很久上半年,头条的一个面试题了。这里如果单纯的用 <code>Promise.all()</code> 去处理全部的异步请求实际上会出现卡顿的情况。比如在 <code>chrome</code> 中同一时间最多支持 <code>6</code>个 <code>tcp</code>连接。</p>
+<h3 id="浏览器与服务器建立一个TCP连接后，是否会在完成一个http请求后断开？什么条件下会断开？"><a href="#浏览器与服务器建立一个TCP连接后，是否会在完成一个http请求后断开？什么条件下会断开？" class="headerlink" title="浏览器与服务器建立一个TCP连接后，是否会在完成一个http请求后断开？什么条件下会断开？"></a>浏览器与服务器建立一个TCP连接后，是否会在完成一个http请求后断开？什么条件下会断开？</h3><p>在 <code>HTTP/1.0</code> 中，一个 <code>http</code> 请求收到服务器响应后，会 <code>断开对应的TCP连接</code> 。这样每次请求，都需要重新建立TCP连接，这样一直重复建立和断开的过程，比较耗时。所以为了充分利用TCP连接，可以设置头字段 <code>Connection: keep-alive</code> ，这样 <code>http</code> 请求完成后，就 <code>不会断开当前的TCP连接</code>，后续的http请求可以使用当前TCP连接进行通信。 </p>
+<h3 id="一个TCP连接可以同时发送几个HTTP请求？"><a href="#一个TCP连接可以同时发送几个HTTP请求？" class="headerlink" title="一个TCP连接可以同时发送几个HTTP请求？"></a>一个TCP连接可以同时发送几个HTTP请求？</h3><p>尽管这样 <code>HTTP/1.1</code> 中，<code>单个TCP连接</code>，在同一时间只能处理<code>一个http请求</code>，虽然存在Pipelining技术支持多个请求同时发送，但由于实践中存在很多问题无法解决，所以浏览器默认是关闭，<code>所以可以认为是不支持同时多个请求</code>。<br><code>HTTP2提供了多路传输功能，多个http请求，可以同时在同一个TCP连接中进行传输。</code></p>
+<h3 id="浏览器http请求的并发性是如何体现的？并发请求的数量有没有限制？"><a href="#浏览器http请求的并发性是如何体现的？并发请求的数量有没有限制？" class="headerlink" title="浏览器http请求的并发性是如何体现的？并发请求的数量有没有限制？"></a>浏览器http请求的并发性是如何体现的？并发请求的数量有没有限制？</h3><p>页面资源请求时，浏览器会同时和服务器建立多个TCP连接，在同一个TCP连接上顺序处理多个HTTP请求。所以浏览器的并发性就体现在可以建立多个TCP连接，来支持多个http同时请求。<br>Chrome浏览器最多允许对同一个域名Host建立6个TCP连接，不同的浏览器有所区别。</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><ul>
+<li>url的地址全部存放至一个数组中</li>
+<li>通过max来控制最大并发度</li>
+<li>全部请求结束后,在执行callback回调</li>
+</ul>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">sendRequest</span><span class="token punctuation">(</span>urls<span class="token punctuation">,</span> max<span class="token punctuation">,</span> callback<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> len <span class="token operator">=</span> urls<span class="token punctuation">.</span>length  
+    <span class="token keyword">let</span> finished <span class="token operator">=</span> <span class="token number">0</span>  <span class="token comment" spellcheck="true">// 已完成多少</span>
+    <span class="token keyword">const</span> request <span class="token operator">=</span> <span class="token punctuation">(</span>url<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>urls<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">let</span> url <span class="token operator">=</span> urls<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 取出第0个</span>
+            <span class="token function">fetch</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">finally</span><span class="token punctuation">(</span>_ <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+                finished<span class="token operator">++</span>
+                <span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">// 完成一个请求补一个</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>finished <span class="token operator">===</span> len<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 说明执行完了</span>
+            <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> max<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">// 一执行这个函数就发送max个请求</span>
+        <span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<h2 id="构造出二叉树"><a href="#构造出二叉树" class="headerlink" title="构造出二叉树"></a>构造出二叉树</h2><p>既然是树,那必须要有一个根节点。每一个节点都需要用到上面<code>Node</code>来保证每一个节点的结构一致。</p>
-<pre class=" language-js"><code class="language-js"><span class="token keyword">class</span> <span class="token class-name">BST</span> <span class="token punctuation">{</span>
-    <span class="token function">constructor</span><span class="token punctuation">(</span>node<span class="token punctuation">,</span> left <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">,</span> right <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// if (!this.root) { // 传入一个根节点</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>node<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<p>这样我们构造出来的树大概就是这样</p>
-<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">//       root</span>
-<span class="token comment" spellcheck="true">//  null       null</span></code></pre>
-<h2 id="增加节点"><a href="#增加节点" class="headerlink" title="增加节点"></a>增加节点</h2><p>增加节点其实就是遍历树中的节点,其中如果目标值比节点值小就把指针指向节点的左树,直到找出空节点位置</p>
-<pre class=" language-js"><code class="language-js"><span class="token function">insert</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">let</span> n <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 把每个传进来的数据都构建成节点</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span>root <span class="token operator">=</span> n
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-            <span class="token keyword">let</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
-            <span class="token keyword">let</span> parent <span class="token operator">=</span> <span class="token keyword">null</span>
-            <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                parent <span class="token operator">=</span> current <span class="token comment" spellcheck="true">// 保存当前循环的节点  添加节点时 它就是父节点</span>
-                <span class="token keyword">if</span> <span class="token punctuation">(</span>current<span class="token punctuation">.</span>data <span class="token operator">></span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 当前节点 的值大于 需要插入的 说明要插入到左节点</span>
-                    current <span class="token operator">=</span> current<span class="token punctuation">.</span>left <span class="token comment" spellcheck="true">// 所以 下次循环的指针是 当前节点的左节点</span>
-                    <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                        parent<span class="token punctuation">.</span>left <span class="token operator">=</span> n
-                        <span class="token keyword">break</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//循环出口</span>
+<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="失败重试"><a href="#失败重试" class="headerlink" title="失败重试"></a>失败重试</h3><p>按照上面的要求再加入一个需求,就是失败的请求自动请求3次如果三次错误的话就把错误信息放入结果中。</p>
+<pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">sendRequest</span><span class="token punctuation">(</span>urls<span class="token punctuation">,</span> max<span class="token punctuation">,</span> callback<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> len <span class="token operator">=</span> urls<span class="token punctuation">.</span>length
+    <span class="token keyword">let</span> currentUrl <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">let</span> finished <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">let</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">const</span> request <span class="token operator">=</span> <span class="token punctuation">(</span>index<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+        <span class="token keyword">let</span> ind <span class="token operator">=</span> index <span class="token operator">||</span> currentUrl <span class="token comment" spellcheck="true">// 如果index 有值则说明</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>ind <span class="token operator">&lt;</span> len<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">fetch</span><span class="token punctuation">(</span>urls<span class="token punctuation">[</span>ind<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>res <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+                result<span class="token punctuation">[</span>ind<span class="token punctuation">]</span> <span class="token operator">=</span> res <span class="token comment" spellcheck="true">// 保证顺序问题</span>
+                finished<span class="token operator">++</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>finished <span class="token operator">===</span> len<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> <span class="token string">'Jieguo'</span><span class="token punctuation">)</span>
+                    <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">}</span>
+                <span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span>e <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">// 记录重试第几次</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">[</span>ind<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 有值说明已经失败过了</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">[</span>ind<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 这里是3 说明执行之前已经发送三次了 这次是第四次</span>
+                        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'我已经失败三次了'</span><span class="token punctuation">)</span>
+                        result<span class="token punctuation">[</span>ind<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token template-string"><span class="token string">`e+e`</span></span> 
+                        finished<span class="token operator">++</span>
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span>finished <span class="token operator">===</span> len<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> <span class="token string">'Jieguo'</span><span class="token punctuation">)</span>
+                            <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                        result<span class="token punctuation">[</span>ind<span class="token punctuation">]</span> <span class="token operator">+</span><span class="token operator">=</span> <span class="token number">1</span>
+                        <span class="token function">request</span><span class="token punctuation">(</span>ind<span class="token punctuation">)</span>
                     <span class="token punctuation">}</span>
                 <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-                    current <span class="token operator">=</span> current<span class="token punctuation">.</span>right
-                    <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                        parent<span class="token punctuation">.</span>right <span class="token operator">=</span> n
-                        <span class="token keyword">break</span><span class="token punctuation">;</span>
-                    <span class="token punctuation">}</span>
+                    result<span class="token punctuation">[</span>ind<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
+                    <span class="token function">request</span><span class="token punctuation">(</span>ind<span class="token punctuation">)</span>
                 <span class="token punctuation">}</span>
-            <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
         <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span></code></pre>
-<h2 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h2><pre class=" language-js"><code class="language-js">    <span class="token function">mid</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 先遍历 左节点->parent->右节点</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>node <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">mid</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">)</span>
-            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>data<span class="token punctuation">,</span> <span class="token string">'当前节点'</span><span class="token punctuation">)</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">mid</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">)</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span></code></pre>
-<h2 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h2><pre class=" language-js"><code class="language-js"><span class="token function">front</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// parent -> 左 -> 右</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>node <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>data<span class="token punctuation">,</span> <span class="token string">'当前节点'</span><span class="token punctuation">)</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">)</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">)</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span></code></pre>
-<h2 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h2><pre class=" language-js"><code class="language-js"><span class="token function">after</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 左 -> 右 -> parent </span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>node <span class="token operator">!==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">)</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">)</span>
-            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>data<span class="token punctuation">,</span> <span class="token string">'当前节点'</span><span class="token punctuation">)</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span></code></pre>
-<h2 id="查找树中某个节点"><a href="#查找树中某个节点" class="headerlink" title="查找树中某个节点"></a>查找树中某个节点</h2><pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// 查找某个节点</span>
-    <span class="token function">find</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">let</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>current<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>current<span class="token punctuation">.</span>data <span class="token operator">></span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                current <span class="token operator">=</span> current<span class="token punctuation">.</span>left
-            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>current<span class="token punctuation">.</span>data <span class="token operator">&lt;</span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                current <span class="token operator">=</span> current<span class="token punctuation">.</span>right
-            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-                <span class="token keyword">return</span> current
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>
-    <span class="token punctuation">}</span></code></pre>
-<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// 删除</span>
-    <span class="token function">remove</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">let</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
-        <span class="token keyword">let</span> parent <span class="token operator">=</span> <span class="token keyword">null</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>current<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            parent <span class="token operator">=</span> current
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>current<span class="token punctuation">.</span>data <span class="token operator">></span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                current <span class="token operator">=</span> current<span class="token punctuation">.</span>left
-            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>current<span class="token punctuation">.</span>data <span class="token operator">&lt;</span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                current <span class="token operator">=</span> current<span class="token punctuation">.</span>right
-            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-                <span class="token comment" spellcheck="true">// 这里就找到了这个节点         </span>
-                <span class="token keyword">let</span> left <span class="token operator">=</span> current<span class="token punctuation">.</span>left  <span class="token comment" spellcheck="true">// 保存当前节点 的左右孩子 </span>
-                <span class="token keyword">let</span> right <span class="token operator">=</span> current<span class="token punctuation">.</span>right
-                parent<span class="token punctuation">.</span>data <span class="token operator">=</span> left<span class="token punctuation">.</span>data  <span class="token comment" spellcheck="true">// 如果被删除的节点有左右孩子</span>
-                parent<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">null</span>       <span class="token comment" spellcheck="true">//  则删除后 父节点的孩子就是被删除节点的孩子</span>
-                parent<span class="token punctuation">.</span>right <span class="token operator">=</span> right
-                <span class="token keyword">return</span> parent
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>
-    <span class="token punctuation">}</span></code></pre>
-<h2 id="寻找最大值"><a href="#寻找最大值" class="headerlink" title="寻找最大值"></a>寻找最大值</h2><pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// 寻找最大值</span>
-    <span class="token function">getMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">let</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>current <span class="token operator">&amp;&amp;</span> current<span class="token punctuation">.</span>right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            current <span class="token operator">=</span> current<span class="token punctuation">.</span>right
-        <span class="token punctuation">}</span>
-        <span class="token keyword">return</span> current<span class="token punctuation">.</span>data
-    <span class="token punctuation">}</span></code></pre>
-<h2 id="寻找最小值"><a href="#寻找最小值" class="headerlink" title="寻找最小值"></a>寻找最小值</h2><pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// 寻找最小值</span>
-    <span class="token function">getMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">let</span> current <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>root
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>current <span class="token operator">&amp;&amp;</span> current<span class="token punctuation">.</span>left<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            current <span class="token operator">=</span> current<span class="token punctuation">.</span>left
-        <span class="token punctuation">}</span>
-        <span class="token keyword">return</span> current<span class="token punctuation">.</span>data
-    <span class="token punctuation">}</span></code></pre>
-<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><pre class=" language-js"><code class="language-js"><span class="token keyword">let</span> node <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BST</span><span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>
-node<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">9</span><span class="token punctuation">)</span>
-node<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
-node<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span>
-node<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span>
-
-<span class="token comment" spellcheck="true">/**
- *                 11
- *             9         12
- *         8      10
- */</span></code></pre>
+        <span class="token operator">!</span>index <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>currentUrl<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 没有index 说明是正常走</span>
+        <span class="token comment" spellcheck="true">// 有index  则是错误重试 他的currentUrl 不需要增加</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> max<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在控制并发数的同时，每结束一个请求并发起一个新的请求。依旧使用递归的方式，但这次添加一个请求队列，然后我们只要维护这个队列，不管是是否可重试,只需要结束一个请求的同时再加入一个请求。这样这个队里的请求就不会超过 <code>max</code>。</p>
 
             </div>
             <hr/>
@@ -609,7 +550,7 @@ node<span class="token punctuation">.</span><span class="token function">insert<
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/qiYuei/qiYuei.github.io/2020/07/09/10-fen-zhong-liao-jie-er-cha-shu/">https://github.com/qiYuei/qiYuei.github.io/2020/07/09/10-fen-zhong-liao-jie-er-cha-shu/</a>
+                    <a href="https://github.com/qiYuei/qiYuei.github.io/2020/07/15/shi-xian-yi-ge-bing-fa-xian-zhi-fang-fa/">https://github.com/qiYuei/qiYuei.github.io/2020/07/15/shi-xian-yi-ge-bing-fa-xian-zhi-fang-fa/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -647,12 +588,12 @@ node<span class="token punctuation">.</span><span class="token function">insert<
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
-                                    <span class="chip bg-color">二叉树</span>
+                                <a href="/tags/Promise/">
+                                    <span class="chip bg-color">Promise</span>
                                 </a>
                             
-                                <a href="/tags/%E7%AE%97%E6%B3%95/">
-                                    <span class="chip bg-color">算法</span>
+                                <a href="/tags/%E5%B9%B6%E5%8F%91%E9%99%90%E5%88%B6/">
+                                    <span class="chip bg-color">并发限制</span>
                                 </a>
                             
                         </div>
@@ -694,9 +635,10 @@ node<span class="token punctuation">.</span><span class="token function">insert<
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/07/15/shi-xian-yi-ge-bing-fa-xian-zhi-fang-fa/">
                     <div class="card-image">
@@ -717,9 +659,9 @@ node<span class="token punctuation">.</span><span class="token function">insert<
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-07-15
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -732,6 +674,7 @@ node<span class="token punctuation">.</span><span class="token function">insert<
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -754,31 +697,31 @@ node<span class="token punctuation">.</span><span class="token function">insert<
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/">
+                <a href="/2020/07/09/10-fen-zhong-liao-jie-er-cha-shu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt=" Vue源码(一)-响应式原理">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="10分钟了解二叉树">
                         
-                        <span class="card-title"> Vue源码(一)-响应式原理</span>
+                        <span class="card-title">10分钟了解二叉树</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            前言最近也是一直学习 Vue 的源码,也看了许多机构解析源码的视频(大部分都是白嫖~但是珠峰讲的是真的不错)。但是光看他们讲是没用滴,我们想要提 (wei)高(le)自(mian)身(shi) ,则需要将他们所讲再加上我们自己的理解。形成自
+                            概述二叉树（Binary tree）是树形结构的一个重要类型。许多实际问题抽象出来的数据结构往往是二叉树形式，即使是一般的树也能简单地转换为二叉树，而且二叉树的存储结构及其算法都较为简单，因此二叉树显得特别重要。二叉树特点是每个结点最多只能
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-06
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-09
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-category">
-                                    源码分析
+                            <a href="/categories/%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87%E7%B3%BB%E5%88%97/" class="post-category">
+                                    面试必备系列
                                 </a>
                             
                             
@@ -788,12 +731,12 @@ node<span class="token punctuation">.</span><span class="token function">insert<
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F/">
-                        <span class="chip bg-color">响应式</span>
+                    <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
+                        <span class="chip bg-color">二叉树</span>
                     </a>
                     
-                    <a href="/tags/Vue2-x%E6%BA%90%E7%A0%81/">
-                        <span class="chip bg-color">Vue2.x源码</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
