@@ -392,9 +392,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">
+                                <span class="chip bg-color">大文件上传</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0/">
+                                <span class="chip bg-color">断点续传</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%B9%B6%E5%8F%91%E5%A4%84%E7%90%86/">
+                                <span class="chip bg-color">并发处理</span>
+                            </a>
+                        
+                            <a href="/tags/%E9%94%99%E8%AF%AF%E9%87%8D%E8%AF%95/">
+                                <span class="chip bg-color">错误重试</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -415,7 +431,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    419
                 </div>
                 
 
@@ -432,7 +448,70 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <p>大文件上传实际上就是靠 <code>js</code> 中的 <code>Blob</code> 中的 <code>slice()</code> 方法把一个大文件切割成小块,再由服务端将这种小块用 <code>流</code>合并成一个新的文件。期间考虑文件改变的话就是让整个文件进行一次 <code>hash</code> 处理。加上 <code>web-worker</code>的加持让 <code>js</code> 主线程的压力降到最小。</p>
+<h3 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h3><p><a href="https://github.com/qiYuei/upload-demo">实现大文件上传 Demo</a></p>
+<h4 id="技术栈"><a href="#技术栈" class="headerlink" title="技术栈"></a>技术栈</h4><blockquote>
+<p>vue+elementUI+spark-md5(处理文件 hash)+koa2</p>
+</blockquote>
+<h4 id="Start"><a href="#Start" class="headerlink" title="Start"></a>Start</h4><ul>
+<li><p>前端</p>
+<blockquote>
+<p>cd /file-upload</p>
+</blockquote>
+<blockquote>
+<p>npm i</p>
+</blockquote>
+<blockquote>
+<p>npm run serve</p>
+</blockquote>
+</li>
+<li><p>服务端</p>
+<blockquote>
+<p>cd /server</p>
+</blockquote>
+<blockquote>
+<p>npm i</p>
+</blockquote>
+<blockquote>
+<p>nodemon ./app.js</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="功能包括"><a href="#功能包括" class="headerlink" title="功能包括"></a>功能包括</h4><ul>
+<li>worker 进程对文件 md5 处理</li>
+<li>限制并发请求</li>
+<li>断点续传</li>
+<li>秒传</li>
+<li>错误重试</li>
+</ul>
+<h4 id="API"><a href="#API" class="headerlink" title="API"></a>API</h4><pre class=" language-js"><code class="language-js">Blob<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 文件分割  用法跟分割字符串一样</span>
+
+<span class="token comment" spellcheck="true">// 开启一个worker线程</span>
+<span class="token comment" spellcheck="true">/*
+ *  Web Worker 的作用，就是为 JavaScript 创造多线程环境，允许主线程创建 Worker 线程，将一些任务分配给后者运行。
+ *  在主线程运行的同时，Worker 线程在后台运行，两者互不干扰。等到 Worker 线程完成计算任务，再把结果返回给主线程。
+ */</span>
+<span class="token keyword">const</span> worker <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Worker</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 主线程向worker线程传递数据</span>
+worker<span class="token punctuation">.</span><span class="token function">onpostMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 主线程监听woker线程回传数据</span>
+worker<span class="token punctuation">.</span><span class="token function">onmessage</span><span class="token punctuation">(</span>cb<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 接收一个回调</span>
+
+<span class="token comment" spellcheck="true">// 服务端</span>
+
+fse<span class="token punctuation">.</span><span class="token function">existsSync</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//同步读取某个路径的文件或者文件夹是否存在 返回true或false</span>
+
+fse<span class="token punctuation">.</span><span class="token function">move</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 移动路径所在的文件</span>
+
+fse<span class="token punctuation">.</span><span class="token function">createWriteStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 创建一个可写流</span>
+
+fse<span class="token punctuation">.</span><span class="token function">createReadStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 创建一个可读流</span>
+
+ReadStream<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//  创建一个管道 将可读流的数据写入 可写流</span></code></pre>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a href="https://juejin.im/post/6844904046436843527#heading-23" target="_blank" rel="noopener">字节跳动面试官：请你实现一个大文件上传和断点续传</a></p>
+
             </div>
             <hr/>
 
@@ -494,7 +573,23 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">
+                                    <span class="chip bg-color">大文件上传</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0/">
+                                    <span class="chip bg-color">断点续传</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%B9%B6%E5%8F%91%E5%A4%84%E7%90%86/">
+                                    <span class="chip bg-color">并发处理</span>
+                                </a>
+                            
+                                <a href="/tags/%E9%94%99%E8%AF%AF%E9%87%8D%E8%AF%95/">
+                                    <span class="chip bg-color">错误重试</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -551,7 +646,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            大文件上传实际上就是靠 js 中的 Blob 中的 slice() 方法把一个大文件切割成小块,再由服务端将这种小块用 流合并成一个新的文件。期间考虑文件改变的话就是让整个文件进行一次 hash 处理。加上 web-worker的加持让 j
                         
                     </div>
                     <div class="publish-info">
@@ -567,6 +662,26 @@
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">
+                        <span class="chip bg-color">大文件上传</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0/">
+                        <span class="chip bg-color">断点续传</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%B9%B6%E5%8F%91%E5%A4%84%E7%90%86/">
+                        <span class="chip bg-color">并发处理</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%94%99%E8%AF%AF%E9%87%8D%E8%AF%95/">
+                        <span class="chip bg-color">错误重试</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -592,7 +707,7 @@
                             
 
 预备知识这道题应该是很久上半年,头条的一个面试题了。这里如果单纯的用 Promise.all() 去处理全部的异步请求实际上会出现卡顿的情况。比如在 chrome 中同一时间最多支持 6个 tcp连接。
-浏览器与服务器建立一个TCP连接
+浏览器与服务器建立一个 TCP 
                         
                     </div>
                     <div class="publish-info">

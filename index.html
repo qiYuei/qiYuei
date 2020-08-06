@@ -341,7 +341,7 @@
 
 <script>
     // 每天切换 banner 图.  Switch banner image every day.
-    $('.bg-cover').css('background-image', 'url(/medias/banner/5.jpg)');
+    $('.bg-cover').css('background-image', 'url(/medias/banner/4.jpg)');
 </script>
 
 
@@ -587,7 +587,7 @@ CMD是基于sea.js 它
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                
+                                大文件上传实际上就是靠 js 中的 Blob 中的 slice() 方法把一个大文件切割成小块,再由服务端将这种小块用 流合并成一个新的文件。期间考虑文件改变的话就是让整个文件进行一次 hash 处理。加上 web-worker的加持让 j
                             
                         </div>
                         <div class="publish-info">
@@ -603,6 +603,26 @@ CMD是基于sea.js 它
                         </div>
                     </div>
 
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">
+                            <span class="chip bg-color">大文件上传</span>
+                        </a>
+                        
+                        <a href="/tags/%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0/">
+                            <span class="chip bg-color">断点续传</span>
+                        </a>
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91%E5%A4%84%E7%90%86/">
+                            <span class="chip bg-color">并发处理</span>
+                        </a>
+                        
+                        <a href="/tags/%E9%94%99%E8%AF%AF%E9%87%8D%E8%AF%95/">
+                            <span class="chip bg-color">错误重试</span>
+                        </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -625,7 +645,7 @@ CMD是基于sea.js 它
                                 
 
 预备知识这道题应该是很久上半年,头条的一个面试题了。这里如果单纯的用 Promise.all() 去处理全部的异步请求实际上会出现卡顿的情况。比如在 chrome 中同一时间最多支持 6个 tcp连接。
-浏览器与服务器建立一个TCP连接
+浏览器与服务器建立一个 TCP 
                             
                         </div>
                         <div class="publish-info">
