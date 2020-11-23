@@ -4,6 +4,125 @@
   
     
     <entry>
+      <title>传统RSA握手和SSL1.2/SSL1.3握手</title>
+      <link href="/2020/11/23/chuan-tong-rsa-wo-shou-he-ssl1-2-ssl1-3-wo-shou/"/>
+      <url>/2020/11/23/chuan-tong-rsa-wo-shou-he-ssl1-2-ssl1-3-wo-shou/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>浅谈HTTPS的对称加密和非对称加密</title>
+      <link href="/2020/11/21/qian-tan-https-de-dui-cheng-jia-mi-he-fei-dui-cheng-jia-mi/"/>
+      <url>/2020/11/21/qian-tan-https-de-dui-cheng-jia-mi-he-fei-dui-cheng-jia-mi/</url>
+      
+        <content type="html"><![CDATA[<p>因为 <code>http</code> 是明文传输的缘故,这方面在现如今非常容易被黑客所利用。所以就出了<code>HTTPS</code>这玩意。默认的端口是 <code>443</code>。</p><p><code>https</code>在一定程度上解决了明文传输数据这一诟病。但是对于传输速度来说它可能还没有 <code>http</code> 快。对于传输速度、队头阻塞这些是 <code>http2.0</code> <code>http3.0</code>这两兄弟干的。(小声嘀咕 <code>http2.0</code> 都还没有普及。<code>http3.0</code> 就来了….)。而 <code>https</code>来说只负责数据传输间的安全性。 所以 <code>HTTPS = HTTP+SSL+TLS</code></p><h4 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h4><p>对称加密说起来就跟字面意思一样。所谓对称就是使用相同的秘钥来进行加密数据。</p><img src="/2020/11/21/qian-tan-https-de-dui-cheng-jia-mi-he-fei-dui-cheng-jia-mi/1.png" class><p>这里问题就很大了,如果我是黑客，我通过抓包工具,一样可以拿到他们传输的秘钥。这样其实加不加密都没有什么效果。</p><p>优点：因为是对称加密,使用相同的秘钥所以加密的速度就会快</p><h4 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h4><p>非对称加密这里呢，服务器会有一套秘钥，他们有公钥和私钥之分。公钥提供给客户端。私钥只留在客户端中。</p><img src="/2020/11/21/qian-tan-https-de-dui-cheng-jia-mi-he-fei-dui-cheng-jia-mi/2.png" class><p>我敲这套理论好像真的可以。理论上是可以的，但实际上非对称加密需要的计算量非常大，对于稍微大一点的数据即使用最快的处理器也非常耗时。</p><h4 id="混合加密"><a href="#混合加密" class="headerlink" title="混合加密"></a>混合加密</h4><p>前面说了对称加密这个速度快，但是安全性不高。而非对称加密安全性高，但是速度可能会很慢。那不如把它两给结合起来？</p><img src="/2020/11/21/qian-tan-https-de-dui-cheng-jia-mi-he-fei-dui-cheng-jia-mi/3.png" class><p>这样就天衣无缝了哈哈哈哈哈,但是聪明的中间人如果在你第一次请求公钥的时候就把错误的公钥传给你。（也就是说而他拿到了真正的公钥）。 你拿着他的公钥去加密，这个中间人一样可以用他自己的私钥解密。这样还是无法保证安全性。</p><h4 id="CA-证书"><a href="#CA-证书" class="headerlink" title="CA 证书"></a>CA 证书</h4><p>上面混合加密的缺点就是没办法确定,与客户端通信的服务端是不是自己信任的服务端。那这样就找一个双方都信任的方式。<code>CA证书</code>它通过确认服务端的真实身份后。将他的签名加入到 <code>公钥和私钥之中</code>。这样只有 <code>客户端公钥+签名</code> 更够被 <code>服务器中的私钥+签名</code>所解析。那就是找对人了。</p><img src="/2020/11/21/qian-tan-https-de-dui-cheng-jia-mi-he-fei-dui-cheng-jia-mi/4.png" class><p>这样的话就算这个中间人拿到了这个公钥想要去伪造,也会因为这个<code>CA签名</code>不一样。解析不了数据。</p><p>缺点:贵贵贵！！</p><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p><code>HTTPS</code> 在 交换出 <code>对称加密</code> 的秘钥之前用 <code>非对称加密</code></p><p>得到 <code>对称加密的秘钥后</code> 使用 <code>对称加密</code></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 面试必备系列 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 计算机网络 </tag>
+            
+            <tag> HTTPS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>HTML和Css知识梳理</title>
+      <link href="/2020/11/09/html-he-css-zhi-shi-shu-li/"/>
+      <url>/2020/11/09/html-he-css-zhi-shi-shu-li/</url>
+      
+        <content type="html"><![CDATA[<h3 id="浏览器的渲染原理"><a href="#浏览器的渲染原理" class="headerlink" title="浏览器的渲染原理"></a>浏览器的渲染原理</h3><p>根据 dom 生成 dom 树,然后根据 css 生成 css 树。然后 dom 树和 css 树生成一棵 render 树，因为节点中可能有 <code>display:none</code>；所以 render 树和 dom 树并不是一一对应的。接着就会遍历渲染书并调用渲染对象的 point()方法将他们的内容显示在屏幕上。注意:浏览器为了更好地用户体验采取渲染一部分就显示一部分。<br>如果渲染的过程中遇到 JS 文件的加载、解析、与执行。则会阻止解析过程,因为 JS 中可能会有对 dom 的一系列操作，所以需要等待 JS 执行完毕,这就会造成长时间的白屏。解决办法就是将 <code>&lt;script&gt;&lt;/script&gt;</code> 放置 body 的下面。<br>或者是 在 <code>&lt;script&gt;&lt;/script&gt;</code> 中加入 <code>async</code> 或者 <code>defer</code>让 JS 异步加载</p><h4 id="defer-和-async"><a href="#defer-和-async" class="headerlink" title="defer 和 async"></a>defer 和 async</h4><p><code>defer</code>异步加载 JS 文件，延迟执行。也就是说加载 JS 时<code>html并未停止解析</code>。两个过程是并行的。在等整个 document 文档解析完再执行 JS 脚本。文档解析完成时，脚本被执行，此时也会触发 domcontentloaded 事件，优先执行脚本</p><p><code>async</code>异步加载 JS 文件但是 它是先加载完就立刻执行所以执行的顺序不一定，也就是说他的执行也会<code>阻塞文档的解析</code></p><h4 id="css-解析为什么会阻碍页面渲染"><a href="#css-解析为什么会阻碍页面渲染" class="headerlink" title="css 解析为什么会阻碍页面渲染"></a>css 解析为什么会阻碍页面渲染</h4><p>首先、css 解析并不会影响 dom 的解析，但是会阻碍页面的渲染</p><p>css 选择器<br>!important &gt; style &gt; id &gt; Class|属性|伪类 &gt; 元素选择器</p><h3 id="回流和重绘"><a href="#回流和重绘" class="headerlink" title="回流和重绘"></a>回流和重绘</h3><h4 id="减少回流的操作"><a href="#减少回流的操作" class="headerlink" title="减少回流的操作"></a>减少回流的操作</h4>]]></content>
+      
+      
+      <categories>
+          
+          <category> 面试必备系列 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 基础 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>判断链表是否有环</title>
+      <link href="/2020/10/21/pan-duan-lian-biao-shi-fou-you-huan/"/>
+      <url>/2020/10/21/pan-duan-lian-biao-shi-fou-you-huan/</url>
+      
+        <content type="html"><![CDATA[<p>如何判断一个链表是否是环形链表呢？不管是哪一种环形链表，循环遍历的时候一定是死循环的，<br>那么在链表循环过程中，如果我们不止一次的遇到同一个节点，这个链表就肯定是环形链表。<br>链表有环分两种</p><ul><li>首尾结成环</li><li>尾部与其他节点结成环,统称6子环</li></ul><p>解题方法有 </p><ul><li>快慢指针法 </li><li>哈希表法</li></ul><h4 id="快慢指针"><a href="#快慢指针" class="headerlink" title="快慢指针"></a>快慢指针</h4><p>顾名思义就是有两个指针,一个指针指向链表的两个 <code>next</code> 而另外一个指针每次指向一个 <code>next</code></p><pre class=" language-js"><code class="language-js"><span class="token keyword">let</span> fast <span class="token operator">=</span> head<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next<span class="token keyword">let</span> slow <span class="token operator">=</span> head<span class="token punctuation">.</span>next</code></pre><p>这样 <code>fast</code> 永远比 <code>slow</code> 快一个单位,就好比两个人去跑步,一个人的速度是 <code>2n</code>,一个是 <code>n</code>。如果是在操场上跑步的话总有一个时间点这两人是相遇的。但是如果是在没有环的大马路上,跑到下辈子都不能相遇的。</p><pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">/*** @{param} head **/</span><span class="token keyword">function</span> <span class="token function">hasCycle</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span><span class="token punctuation">{</span>  <span class="token keyword">let</span> fast <span class="token operator">=</span> head  <span class="token keyword">let</span> slow <span class="token operator">=</span> head  <span class="token keyword">while</span><span class="token punctuation">(</span>fast<span class="token operator">&amp;&amp;</span>fast<span class="token punctuation">.</span>next<span class="token punctuation">)</span><span class="token punctuation">{</span>      fast <span class="token operator">=</span> fast<span class="token punctuation">.</span>next<span class="token punctuation">.</span>next      slow <span class="token operator">=</span> slow<span class="token punctuation">.</span>next      <span class="token keyword">if</span><span class="token punctuation">(</span>fast <span class="token operator">===</span> slow<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span>  <span class="token punctuation">}</span>  <span class="token comment" spellcheck="true">// 如果走出循环了就说明没有相遇</span>  <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">}</span></code></pre><h4 id="哈希表法"><a href="#哈希表法" class="headerlink" title="哈希表法"></a>哈希表法</h4><p>哈希表在 <code>JS</code> 中就是使用 <code>ES6</code> 的<code>new Map()</code>,借助这种数据方式的 <code>key</code> 可以以任何形式存储,如果有相同的 <code>key</code>那就说明有环啦</p><pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">/*** @{param} head **/</span><span class="token keyword">function</span> <span class="token function">hasCycle</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span><span class="token punctuation">{</span>    <span class="token keyword">let</span> node <span class="token operator">=</span> head    <span class="token keyword">let</span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Map</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token keyword">while</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">{</span>        <span class="token keyword">if</span><span class="token punctuation">(</span>map<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>           <span class="token keyword">return</span> <span class="token boolean">true</span>        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>            <span class="token comment" spellcheck="true">// 指针往下</span>            map<span class="token punctuation">.</span><span class="token keyword">set</span><span class="token punctuation">(</span>node<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>            node <span class="token operator">=</span> node<span class="token punctuation">.</span>next        <span class="token punctuation">}</span>    <span class="token punctuation">}</span>    <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">}</span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 面试必备系列 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+            <tag> 链表 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>webpack热更新原理</title>
+      <link href="/2020/09/07/webpack-re-geng-xin-yuan-li/"/>
+      <url>/2020/09/07/webpack-re-geng-xin-yuan-li/</url>
+      
+        <content type="html"><![CDATA[<h3 id="webpack中开启热更新"><a href="#webpack中开启热更新" class="headerlink" title="webpack中开启热更新"></a>webpack中开启热更新</h3><p>热更新主要是引用 <code>webpack</code> 中的内置 <code>HotModuleReplacementPlugin</code> 模块,借助 <code>webpack-dev-server</code> 这个服务中运行。</p><pre class=" language-js"><code class="language-js"><span class="token keyword">const</span> webpack <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"webpack"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>    entry<span class="token punctuation">:</span><span class="token string">''</span><span class="token punctuation">,</span>    output<span class="token punctuation">:</span><span class="token string">''</span><span class="token punctuation">,</span>    plugins<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>HotModuleReplacementPlugin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>    devServer<span class="token punctuation">:</span><span class="token punctuation">{</span>        contentBase<span class="token punctuation">:</span><span class="token string">'./dist'</span>        hot<span class="token punctuation">:</span><span class="token boolean">true</span>    <span class="token punctuation">}</span><span class="token punctuation">}</span></code></pre><h3 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h3><p>在 <code>package.json</code> 中配置命令 <code>&quot;dev&quot;: &quot;webpack-dev-server --config webpack.dev --open&quot;</code> 这条命令会在本地开启一个node服务。 开启编译 。<br>在 <code>node server</code> 中引入 <code>webpack-dev-middlerware</code> 和 <code>webpack-hot-middleware</code>插件。如果是koa则引入相对应的 <code>koa-webpack-dev-middlerware</code> 和 <code>koa-webpack-hot-middleware</code></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> webpack </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 热更新原理 </tag>
+            
+            <tag> 热更新配置 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>实现一个大文件上传</title>
       <link href="/2020/07/15/shi-xian-yi-ge-da-wen-jian-shang-chuan/"/>
       <url>/2020/07/15/shi-xian-yi-ge-da-wen-jian-shang-chuan/</url>
@@ -184,11 +303,11 @@
             
             <tag> 计算机网络 </tag>
             
+            <tag> 浏览器 </tag>
+            
             <tag> 强缓存 </tag>
             
             <tag> 弱缓存 </tag>
-            
-            <tag> 浏览器 </tag>
             
         </tags>
       
