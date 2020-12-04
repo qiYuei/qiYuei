@@ -453,7 +453,8 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>上一节中知道大概 <code>HTTPS</code> 是怎么构成的。 <code>SSL</code> (安全套接层)和 <code>TLS</code>(传输层安全) 加上 <code>HTTP</code>。然后也大概演示了 对称加密和非对称加密的优缺点。<br>其实在服务端和客户端交换秘钥的过程中，也在 <code>握手</code>。所以就不单单只有 <code>TCP</code> 的三次握手。</p>
+                <p>上一节中知道大概 <code>HTTPS</code> 是怎么构成的。 <code>SSL</code> (安全套接层)和 <code>TLS</code>(传输层安全) 加上 <code>HTTP</code>。然后也大概演示了 对称加密和非对称加密的优缺点。</p>
+<p>其实在服务端和客户端交换秘钥的过程中，也在 <code>握手</code>。所以就不单单只有 <code>TCP</code> 的三次握手。</p>
 <p><code>TLS</code> 中有三个版本的握手分别是 <code>TLS1.0</code> , <code>TLS1.1</code>, <code>TLS1.2</code> ,<code>TLS1.3</code>但是由于 <code>TLS1.0</code> 在提案阶段就暴露出一些问题。所以就直接没有继续下去。现在我们常用的是 <code>TLS1.2</code></p>
 <h3 id="TLS1-1-RSA-握手"><a href="#TLS1-1-RSA-握手" class="headerlink" title="TLS1.1(RSA 握手)"></a>TLS1.1(RSA 握手)</h3><p><code>TLS1.1</code> 也就是以前说的 <code>RSA</code>握手。首先得明确的是不管是 <code>TSL 1.X</code>除了 <code>TLS 1.0</code> 之外。他们之间的握手全部都是 <code>混合加密</code>的方式。</p>
 <ul>
@@ -472,7 +473,7 @@
 <li><p>发送一个 <code>确认信号后</code> 开始用 以 <code>secret</code>作为<code>对称加密</code>的秘钥</p>
 </li>
 </ul>
-<img src="/2020/11/23/chuan-tong-rsa-wo-shou-he-ssl1-2-ssl1-3-wo-shou/1.jpg" class>
+
 
 <h3 id="TLS1-2-ECDHE-握手"><a href="#TLS1-2-ECDHE-握手" class="headerlink" title="TLS1.2(ECDHE 握手)"></a>TLS1.2(ECDHE 握手)</h3><p><code>ECDHE握手</code>在<code>RSA握手</code>的基础上前两个环节都不变</p>
 <ol>
@@ -529,7 +530,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://github.com/qiYuei/qiYuei.github.io/2020/11/23/chuan-tong-rsa-wo-shou-he-ssl1-2-ssl1-3-wo-shou/">https://github.com/qiYuei/qiYuei.github.io/2020/11/23/chuan-tong-rsa-wo-shou-he-ssl1-2-ssl1-3-wo-shou/</a>
+                    <a href="https://github.com/qiYuei/qiYuei.github.io/2020/11/23/chuan-tong-rsa-wo-shou-he-tls1-2-tls1-3-wo-shou/">https://github.com/qiYuei/qiYuei.github.io/2020/11/23/chuan-tong-rsa-wo-shou-he-tls1-2-tls1-3-wo-shou/</a>
                 </span>
             </div>
             <div class="reprint__notice">

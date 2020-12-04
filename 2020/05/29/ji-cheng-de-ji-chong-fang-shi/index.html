@@ -436,7 +436,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    885
+                    889
                 </div>
                 
 
@@ -536,7 +536,7 @@ tce<span class="token punctuation">.</span><span class="token function">say</spa
 <span class="token punctuation">}</span>
 dog<span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">foo</span><span class="token punctuation">(</span><span class="token string">'小猫'</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span></code></pre>
 <p>这个组合的方式很明显就是吧上面两个的方式组合起来了。但是这样相当于调用了两次<code>foo</code>造成了不必要的新能浪费</p>
-<h4 id="组合式优化"><a href="#组合式优化" class="headerlink" title="组合式优化"></a>组合式优化</h4><pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span>age<span class="token punctuation">)</span><span class="token punctuation">{</span>
+<h4 id="组合式优化（寄生继承）"><a href="#组合式优化（寄生继承）" class="headerlink" title="组合式优化（寄生继承）"></a>组合式优化（寄生继承）</h4><pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span>age<span class="token punctuation">)</span><span class="token punctuation">{</span>
   <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name
   <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age
   <span class="token keyword">this</span><span class="token punctuation">.</span>play <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span>

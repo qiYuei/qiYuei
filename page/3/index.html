@@ -295,7 +295,7 @@
 
 <script>
     // 每天切换 banner 图.  Switch banner image every day.
-    $('.bg-cover').css('background-image', 'url(/medias/banner/4.jpg)');
+    $('.bg-cover').css('background-image', 'url(/medias/banner/5.jpg)');
 </script>
 
 
@@ -315,32 +315,33 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2020/06/03/vue-mixin-yi-nan-dian/">
+                    <a href="/2020/09/07/webpack-re-geng-xin-yuan-li/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Vue-Mixin疑难点">
+                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="webpack热更新原理">
                             
-                            <span class="card-title">Vue-Mixin疑难点</span>
+                            <span class="card-title">webpack热更新原理</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                前言这个API在vue官方文档的解释是混入,字面意思就是合并对吧!!!昨天笔试了一道题,就是关于mixin的一些理解。这个API在一般情况下我都没用用到…如果是重复的逻辑都是单独抽取当组件使用…所以昨天那道题简直就是灵魂拷问当时的我就是一脸
+                                webpack中开启热更新热更新主要是引用 webpack 中的内置 HotModuleReplacementPlugin 模块,借助 webpack-dev-server 这个服务中运行。
+const webpack = require(
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-07
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/Vue/" class="post-category">
-                                    Vue
+                                <a href="/categories/webpack/" class="post-category">
+                                    webpack
                                 </a>
                                 
                                 
@@ -351,16 +352,12 @@
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/mixin/">
-                            <span class="chip bg-color">mixin</span>
+                        <a href="/tags/%E7%83%AD%E6%9B%B4%E6%96%B0%E5%8E%9F%E7%90%86/">
+                            <span class="chip bg-color">热更新原理</span>
                         </a>
                         
-                        <a href="/tags/%E6%BA%90%E7%A0%81/">
-                            <span class="chip bg-color">源码</span>
-                        </a>
-                        
-                        <a href="/tags/%E7%81%B5%E9%AD%82%E6%8B%B7%E9%97%AE/">
-                            <span class="chip bg-color">灵魂拷问</span>
+                        <a href="/tags/%E7%83%AD%E6%9B%B4%E6%96%B0%E9%85%8D%E7%BD%AE/">
+                            <span class="chip bg-color">热更新配置</span>
                         </a>
                         
                     </div>
@@ -370,25 +367,238 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2020/06/02/tu-jie-http-huan-cun/">
+                    <a href="/2020/07/15/shi-xian-yi-ge-da-wen-jian-shang-chuan/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="图解HTTP缓存">
+                            <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="实现一个大文件上传">
                             
-                            <span class="card-title">图解HTTP缓存</span>
+                            <span class="card-title">实现一个大文件上传</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                前言作为一个合格的前端工程师,且以大厂为目标的程序猿,浏览器的相关工作原理使我们进行性能优化的基石。必须牢牢掌握这才能对瞬息万变的实际场景,针对性地给出实际方案,而不是各种背诵(掘金上混脸熟)的开发’军规’和性能优化常见条例。这样很难真正发
+                                大文件上传实际上就是靠 js 中的 Blob 中的 slice() 方法把一个大文件切割成小块,再由服务端将这种小块用 流合并成一个新的文件。期间考虑文件改变的话就是让整个文件进行一次 hash 处理。加上 web-worker的加持让 j
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-02
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-15
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                qiYuei
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E5%A4%A7%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">
+                            <span class="chip bg-color">大文件上传</span>
+                        </a>
+                        
+                        <a href="/tags/%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0/">
+                            <span class="chip bg-color">断点续传</span>
+                        </a>
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91%E5%A4%84%E7%90%86/">
+                            <span class="chip bg-color">并发处理</span>
+                        </a>
+                        
+                        <a href="/tags/%E9%94%99%E8%AF%AF%E9%87%8D%E8%AF%95/">
+                            <span class="chip bg-color">错误重试</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2020/07/15/shi-xian-yi-ge-bing-fa-xian-zhi-fang-fa/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="实现一个并发限制方法">
+                            
+                            <span class="card-title">实现一个并发限制方法</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+
+预备知识这道题应该是很久上半年,头条的一个面试题了。这里如果单纯的用 Promise.all() 去处理全部的异步请求实际上会出现卡顿的情况。比如在 chrome 中同一时间最多支持 6个 tcp连接。
+浏览器与服务器建立一个 TCP 
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-15
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97/" class="post-category">
+                                    手写系列
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Promise/">
+                            <span class="chip bg-color">Promise</span>
+                        </a>
+                        
+                        <a href="/tags/%E5%B9%B6%E5%8F%91%E9%99%90%E5%88%B6/">
+                            <span class="chip bg-color">并发限制</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2020/07/09/10-fen-zhong-liao-jie-er-cha-shu/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="10分钟了解二叉树">
+                            
+                            <span class="card-title">10分钟了解二叉树</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                概述二叉树（Binary tree）是树形结构的一个重要类型。许多实际问题抽象出来的数据结构往往是二叉树形式，即使是一般的树也能简单地转换为二叉树，而且二叉树的存储结构及其算法都较为简单，因此二叉树显得特别重要。二叉树特点是每个结点最多只能
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-09
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87%E7%B3%BB%E5%88%97/" class="post-category">
+                                    面试必备系列
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
+                            <span class="chip bg-color">二叉树</span>
+                        </a>
+                        
+                        <a href="/tags/%E7%AE%97%E6%B3%95/">
+                            <span class="chip bg-color">算法</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2020/07/06/vue-yuan-ma-yi-xiang-ying-shi-yuan-li/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/4.jpg" class="responsive-img" alt=" Vue源码(一)-响应式原理">
+                            
+                            <span class="card-title"> Vue源码(一)-响应式原理</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                前言最近也是一直学习 Vue 的源码,也看了许多机构解析源码的视频(大部分都是白嫖~但是珠峰讲的是真的不错)。但是光看他们讲是没用滴,我们想要提 (wei)高(le)自(mian)身(shi) ,则需要将他们所讲再加上我们自己的理解。形成自
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-06
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" class="post-category">
+                                    源码分析
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F/">
+                            <span class="chip bg-color">响应式</span>
+                        </a>
+                        
+                        <a href="/tags/Vue2-x%E6%BA%90%E7%A0%81/">
+                            <span class="chip bg-color">Vue2.x源码</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2020/06/18/cong-url-dao-ye-mian-zhan-shi-fa-sheng-liao-shi-me/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="从URL到页面展示发生了什么">
+                            
+                            <span class="card-title">从URL到页面展示发生了什么</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                概述这道面试题其实5 6句话就能搞定,难就难在这个问题能在繁衍出其他的子问题,不管是计算机网络还是浏览器工作原理还有优化方面都可以从这个问题拓展出。
+
+1.DNS 解析:将域名解析成 IP 地址2.TCP 连接：TCP 三次握手3.发送 H
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-18
                             </span>
                             <span class="publish-author">
                                 
@@ -414,234 +624,6 @@
                             <span class="chip bg-color">浏览器</span>
                         </a>
                         
-                        <a href="/tags/%E5%BC%BA%E7%BC%93%E5%AD%98/">
-                            <span class="chip bg-color">强缓存</span>
-                        </a>
-                        
-                        <a href="/tags/%E5%BC%B1%E7%BC%93%E5%AD%98/">
-                            <span class="chip bg-color">弱缓存</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/05/29/er-fen-cha-zhao/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="二分查找">
-                            
-                            <span class="card-title">二分查找</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                前言二分查找也称折半查找（Binary Search），它是一种效率较高的查找方法。但是，折半查找要求线性表必须采用顺序存储结构，而且表中元素按关键字有序排列。重点是有序
-边界情况let binarySearch = (arr, targe
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-29
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87%E7%B3%BB%E5%88%97/" class="post-category">
-                                    面试必备系列
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E7%AE%97%E6%B3%95/">
-                            <span class="chip bg-color">算法</span>
-                        </a>
-                        
-                        <a href="/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/">
-                            <span class="chip bg-color">二分查找</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/05/29/ji-cheng-de-ji-chong-fang-shi/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="继承的几种方式">
-                            
-                            <span class="card-title">继承的几种方式</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                概述
-面试官：说一说 JS 中的继承方式有哪些？以及各个继承方式的优缺点。首先先来分析下这道面试题的考点有什么？首先是继承,继承有很多种方式基本上都离不开两个概念原型和原型链。然后就是这种继承的优缺点
-
-课前知识原型首先每个JS对象都会有一
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-29
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87%E7%B3%BB%E5%88%97/" class="post-category">
-                                    面试必备系列
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E7%BB%A7%E6%89%BF/">
-                            <span class="chip bg-color">继承</span>
-                        </a>
-                        
-                        <a href="/tags/%E5%8E%9F%E5%9E%8B%E9%93%BE/">
-                            <span class="chip bg-color">原型链</span>
-                        </a>
-                        
-                        <a href="/tags/%E5%8E%9F%E5%9E%8B/">
-                            <span class="chip bg-color">原型</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/05/28/cong-0-kai-shi-shi-xian-yi-ge-promise/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="从0开始实现一个Promise">
-                            
-                            <span class="card-title">从0开始实现一个Promise</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                概述在早期处理异步的方式都是采用回调函数的形式,比如nodeApi,多个回调中就形成了回调多层嵌套(也叫回调地狱)。后来出现的generater和Promise解决了回调地狱的问题。Promise 是 JavaScript 异步编程的一种流
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-28
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97/" class="post-category">
-                                    手写系列
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Promise/">
-                            <span class="chip bg-color">Promise</span>
-                        </a>
-                        
-                        <a href="/tags/%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8/">
-                            <span class="chip bg-color">链式调用</span>
-                        </a>
-                        
-                        <a href="/tags/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">
-                            <span class="chip bg-color">观察者模式</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/05/27/shi-xian-yi-ge-new-guan-jian-zi/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="实现一个new关键字">
-                            
-                            <span class="card-title">实现一个new关键字</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                new关键字做了什么事
-创建一个新的对象
-
-将构造函数的原型链赋值到新的对象中
-
-构造函数中是否返回引用类型的值不是则返回创建的对象
-实现function myNew(ctx,...arg){
-// 1.创建新对象
-let obj = {}
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-27
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97/" class="post-category">
-                                    手写系列
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/new/">
-                            <span class="chip bg-color">new</span>
-                        </a>
-                        
                     </div>
                     
                 </div>
@@ -664,7 +646,7 @@ let obj = {}
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">3 / 4</div>
+            <div class="center-align b-text-gray">3 / 5</div>
         </div>
         <div class="col s6 m4 l4">
             
